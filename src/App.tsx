@@ -26,7 +26,7 @@ function App() {
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <HeroSection scrollToSection={scrollToSection} />
 
-      <main className="pt-20">
+      <main className="pt-8">
         <Suspense fallback={<SectionLoader />}>
           <WorkSection />
         </Suspense>

@@ -80,8 +80,8 @@ export default function WorkSection() {
   );
 
   return (
-    <section id="work" className="min-h-screen px-6 py-20">
-      <div className="container mx-auto max-w-3xl px-4 mt-20">
+    <section id="work" className="px-6 py-12">
+      <div className="container mx-auto max-w-3xl px-4">
         <div>
           <p className="text-gray-400 text-sm mb-2">Featured</p>
           <h2 className="text-2xl font-bold">Experience</h2>
