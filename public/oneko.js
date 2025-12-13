@@ -1,5 +1,6 @@
 // oneko.js - A cat that follows your cursor (with drag & drop!)
-(function() {
+// Optimized for smooth 60 FPS animation
+(function () {
   const nekoEl = document.createElement("div");
   let nekoPosX = 32;
   let nekoPosY = 32;
@@ -10,6 +11,11 @@
   let idleAnimation = null;
   let idleAnimationFrame = 0;
   const nekoSpeed = 10;
+
+  // Animation timing for smooth 60 FPS
+  let lastFrameTime = 0;
+  const frameInterval = 100; // Sprite change interval (ms)
+  let animationId = null;
 
   // Drag and drop variables
   let isDragging = false;
@@ -91,27 +97,40 @@
     nekoEl.style.pointerEvents = "auto";
     nekoEl.style.backgroundImage = "url('/oneko.gif')";
     nekoEl.style.imageRendering = "pixelated";
-    nekoEl.style.left = `${nekoPosX - 16}px`;
-    nekoEl.style.top = `${nekoPosY - 16}px`;
+    nekoEl.style.left = "0";
+    nekoEl.style.top = "0";
+    nekoEl.style.transform = `translate(${nekoPosX - 16}px, ${nekoPosY - 16}px)`;
+    nekoEl.style.willChange = "transform, background-position";
     nekoEl.style.zIndex = "999999";
     nekoEl.style.cursor = "grab";
+    nekoEl.style.transition = "none";
 
     document.body.appendChild(nekoEl);
 
+    // Velocity smoothing for accurate throw detection
+    let velocityHistory = [];
+    const velocityHistorySize = 5;
+
     // Mouse move event
-    document.addEventListener("mousemove", function(event) {
+    document.addEventListener("mousemove", function (event) {
       if (isDragging) {
         const currentX = event.clientX;
         const currentY = event.clientY;
 
-        velocityX = currentX - lastMouseX;
-        velocityY = currentY - lastMouseY;
+        // Calculate instantaneous velocity
+        const instantVelX = currentX - lastMouseX;
+        const instantVelY = currentY - lastMouseY;
+
+        // Store velocity history for smoothing
+        velocityHistory.push({ x: instantVelX, y: instantVelY, time: performance.now() });
+        if (velocityHistory.length > velocityHistorySize) {
+          velocityHistory.shift();
+        }
 
         nekoPosX = currentX - dragOffsetX;
         nekoPosY = currentY - dragOffsetY;
 
-        nekoEl.style.left = `${nekoPosX - 16}px`;
-        nekoEl.style.top = `${nekoPosY - 16}px`;
+        nekoEl.style.transform = `translate(${nekoPosX - 16}px, ${nekoPosY - 16}px)`;
 
         lastMouseX = currentX;
         lastMouseY = currentY;
@@ -124,9 +143,10 @@
     });
 
     // Mouse down on cat
-    nekoEl.addEventListener("mousedown", function(event) {
+    nekoEl.addEventListener("mousedown", function (event) {
       isDragging = true;
       isThrown = false;
+      velocityHistory = [];
       nekoEl.style.cursor = "grabbing";
 
       const rect = nekoEl.getBoundingClientRect();
@@ -142,10 +162,21 @@
     });
 
     // Mouse up - release cat
-    document.addEventListener("mouseup", function() {
+    document.addEventListener("mouseup", function () {
       if (isDragging) {
         isDragging = false;
         nekoEl.style.cursor = "grab";
+
+        // Calculate smoothed velocity from recent history
+        if (velocityHistory.length > 0) {
+          const recentVelocities = velocityHistory.slice(-3); // Use last 3 samples
+          velocityX = recentVelocities.reduce((sum, v) => sum + v.x, 0) / recentVelocities.length;
+          velocityY = recentVelocities.reduce((sum, v) => sum + v.y, 0) / recentVelocities.length;
+
+          // Amplify velocity for better throw feel
+          velocityX *= 1.5;
+          velocityY *= 1.5;
+        }
 
         // If thrown with enough velocity, apply physics
         if (Math.abs(velocityX) > 2 || Math.abs(velocityY) > 2) {
@@ -155,33 +186,54 @@
       }
     });
 
-    window.onekoInterval = setInterval(frame, 100);
+    // Start the smooth animation loop
+    lastFrameTime = performance.now();
+    animationLoop();
+  }
+
+  function animationLoop(currentTime) {
+    animationId = requestAnimationFrame(animationLoop);
+
+    // Only update sprite animation at the desired frame rate
+    if (currentTime - lastFrameTime >= frameInterval) {
+      frame();
+      lastFrameTime = currentTime - ((currentTime - lastFrameTime) % frameInterval);
+    }
   }
 
   function applyThrowPhysics() {
-    const friction = 0.95;
-    const minVelocity = 0.5;
+    const friction = 0.96; // Slightly less friction for smoother deceleration
+    const minVelocity = 0.3; // Lower threshold for smoother stop
+    const bounceMultiplier = 0.6; // Better bounce feel
     let throwFrameCount = 0;
+    let lastThrowTime = performance.now();
 
-    function throwFrame() {
+    function throwFrame(currentTime) {
       if (!isThrown) return;
 
-      velocityX *= friction;
-      velocityY *= friction;
+      // Calculate delta time for consistent physics
+      const deltaTime = Math.min((currentTime - lastThrowTime) / 16.67, 2); // Normalize to 60fps, cap at 2x
+      lastThrowTime = currentTime;
 
-      nekoPosX += velocityX;
-      nekoPosY += velocityY;
+      // Apply friction with delta time
+      const frictionFactor = Math.pow(friction, deltaTime);
+      velocityX *= frictionFactor;
+      velocityY *= frictionFactor;
 
-      // Determine direction based on velocity for sprite
+      // Update position
+      nekoPosX += velocityX * deltaTime;
+      nekoPosY += velocityY * deltaTime;
+
+      // Determine direction based on velocity for sprite (FIXED: correct E/W mapping)
       const speed = Math.sqrt(velocityX ** 2 + velocityY ** 2);
-      if (speed > 1) {
+      if (speed > 0.5) {
         let direction = "";
-        if (velocityY < -0.5 * speed) direction += "N";
-        if (velocityY > 0.5 * speed) direction += "S";
-        if (velocityX < -0.5 * speed) direction += "E";
-        if (velocityX > 0.5 * speed) direction += "W";
+        if (velocityY < -0.4 * speed) direction += "N";
+        if (velocityY > 0.4 * speed) direction += "S";
+        if (velocityX > 0.4 * speed) direction += "E";  // Moving right = facing East
+        if (velocityX < -0.4 * speed) direction += "W"; // Moving left = facing West
 
-        if (direction) {
+        if (direction && spriteSets[direction]) {
           setSprite(direction, throwFrameCount);
         } else {
           setSprite("alert", 0);
@@ -189,33 +241,44 @@
         throwFrameCount++;
       }
 
-      // Bounce off edges
+      // Bounce off edges with improved physics
+      let bounced = false;
       if (nekoPosX < 16) {
         nekoPosX = 16;
-        velocityX = Math.abs(velocityX) * 0.5;
+        velocityX = Math.abs(velocityX) * bounceMultiplier;
+        bounced = true;
       }
       if (nekoPosX > window.innerWidth - 16) {
         nekoPosX = window.innerWidth - 16;
-        velocityX = -Math.abs(velocityX) * 0.5;
+        velocityX = -Math.abs(velocityX) * bounceMultiplier;
+        bounced = true;
       }
       if (nekoPosY < 16) {
         nekoPosY = 16;
-        velocityY = Math.abs(velocityY) * 0.5;
+        velocityY = Math.abs(velocityY) * bounceMultiplier;
+        bounced = true;
       }
       if (nekoPosY > window.innerHeight - 16) {
         nekoPosY = window.innerHeight - 16;
-        velocityY = -Math.abs(velocityY) * 0.5;
+        velocityY = -Math.abs(velocityY) * bounceMultiplier;
+        bounced = true;
       }
 
-      nekoEl.style.left = `${nekoPosX - 16}px`;
-      nekoEl.style.top = `${nekoPosY - 16}px`;
+      // Show alert sprite briefly on bounce
+      if (bounced && speed > 2) {
+        setSprite("alert", 0);
+      }
+
+      nekoEl.style.transform = `translate(${nekoPosX - 16}px, ${nekoPosY - 16}px)`;
 
       // Stop when velocity is low enough
-      if (Math.abs(velocityX) < minVelocity && Math.abs(velocityY) < minVelocity) {
+      const totalSpeed = Math.sqrt(velocityX ** 2 + velocityY ** 2);
+      if (totalSpeed < minVelocity) {
         isThrown = false;
         velocityX = 0;
         velocityY = 0;
         idleTime = 0;
+        setSprite("idle", 0);
       } else {
         requestAnimationFrame(throwFrame);
       }
@@ -257,7 +320,7 @@
       }
       idleAnimation =
         availableIdleAnimations[
-          Math.floor(Math.random() * availableIdleAnimations.length)
+        Math.floor(Math.random() * availableIdleAnimations.length)
         ];
     }
 
@@ -327,8 +390,7 @@
     nekoPosX = Math.min(Math.max(16, nekoPosX), window.innerWidth - 16);
     nekoPosY = Math.min(Math.max(16, nekoPosY), window.innerHeight - 16);
 
-    nekoEl.style.left = `${nekoPosX - 16}px`;
-    nekoEl.style.top = `${nekoPosY - 16}px`;
+    nekoEl.style.transform = `translate(${nekoPosX - 16}px, ${nekoPosY - 16}px)`;
   }
 
   create();

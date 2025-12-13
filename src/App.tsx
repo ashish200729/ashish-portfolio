@@ -23,7 +23,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] text-gray-900 dark:text-white transition-colors duration-300">
       <HeroSection scrollToSection={scrollToSection} />
 
       <main className="pt-8">

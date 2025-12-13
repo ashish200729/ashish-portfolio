@@ -8,7 +8,7 @@ export default function AboutSection() {
       <section id="hire" className="min-h-screen px-6 py-20">
         <div className="max-w-4xl mx-auto">
           <div>
-            <p className="text-secondary text-sm">About</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">About</p>
             <h2 className="text-2xl font-bold">Me</h2>
           </div>
 
@@ -23,10 +23,10 @@ export default function AboutSection() {
             />
             <div className="mt-4">
               <h3 className="text-2xl font-bold">Ashish Prajapati</h3>
-              <p className="text-secondary mt-4">
+              <p className="text-gray-500 dark:text-gray-400 mt-4">
                 I'm a Full Stack web developer and Open Source Contributor, I love building products to solve real-world problems. I'm specialized in building MVP's.
               </p>
-              <p className="text-secondary mt-8 font-bold">Skills</p>
+              <p className="text-gray-500 dark:text-gray-400 mt-8 font-bold">Skills</p>
               <div className="flex flex-wrap gap-2">
                 {/* React */}
                 <div className="mt-4 size-6 hover:cursor-pointer" title="React">
@@ -60,14 +60,18 @@ export default function AboutSection() {
                 <div className="mt-4 size-6 hover:cursor-pointer" title="Supabase">
                   <svg viewBox="0 0 128 128"><path fill="#2d3748" d="M66.457.014a6.308 6.308 0 0 0-5.812 3.028l-47.87 78.072a6.379 6.379 0 0 0 .048 6.748l23.568 37.186a6.387 6.387 0 0 0 7.22 2.683l68.012-20.407a6.37 6.37 0 0 0 3.96-8.765l-43.72-94.85A6.298 6.298 0 0 0 66.46.014Zm1.795 23.95a2.348 2.348 0 0 1 2.448 1.433l30.16 69.784a2.39 2.39 0 0 1-1.512 3.241l-46.996 14.024a2.39 2.39 0 0 1-3.024-2.76l16.83-83.812a2.353 2.353 0 0 1 2.099-1.91z"></path></svg>
                 </div>
+                {/* Python */}
+                <div className="mt-4 size-6 hover:cursor-pointer" title="Python">
+                  <svg viewBox="0 0 128 128"><linearGradient id="python-original-a" x1="70.252" x2="170.659" y1="1237.476" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#5A9FD4" /><stop offset="1" stopColor="#306998" /></linearGradient><linearGradient id="python-original-b" x1="209.474" x2="173.62" y1="1098.811" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#FFD43B" /><stop offset="1" stopColor="#FFE873" /></linearGradient><path fill="url(#python-original-a)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z" /><path fill="url(#python-original-b)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z" /></svg>
+                </div>
               </div>
             </div>
           </div>
 
           <Suspense fallback={
-            <div className="border border-gray-800 rounded-2xl bg-gradient-to-br from-[#0c0d10] via-[#0c1117] to-[#0b0c12] p-10 shadow-2xl">
+            <div className="border border-gray-200 dark:border-gray-800 rounded-2xl bg-gray-50 dark:bg-gradient-to-br dark:from-[#0c0d10] dark:via-[#0c1117] dark:to-[#0b0c12] p-10 shadow-2xl">
               <div className="flex items-center justify-center h-64">
-                <div className="animate-pulse text-gray-400">Loading GitHub activity...</div>
+                <div className="animate-pulse text-gray-500 dark:text-gray-400">Loading GitHub activity...</div>
               </div>
             </div>
           }>
@@ -76,18 +80,39 @@ export default function AboutSection() {
         </div>
       </section>
 
-      <section className="min-h-[50vh] px-6 py-20 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-2xl text-gray-400 mb-8">Hey, you scrolled this far, let's talk.</p>
-          <button className="px-8 py-4 bg-white text-black hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-3 mx-auto text-lg font-medium">
+      <section className="min-h-[40vh] px-6 py-24 flex items-center justify-center">
+        <div className="text-center max-w-2xl mx-auto space-y-8">
+          <div className="space-y-4">
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Hey, you scrolled this far.
+            </h3>
+            <p className="text-xl text-gray-500 dark:text-gray-400 font-medium">
+              Let's create something amazing together.
+            </p>
+          </div>
+
+          <a
+            href="https://wa.me/7623075589"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-100 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg mx-auto text-lg font-bold group"
+          >
             <img
-              src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&dpr=2"
-              alt="Profile"
-              className="w-6 h-6 rounded object-cover"
+              src="/image.jpg"
+              alt="Ashish Prajapati"
+              className="w-8 h-8 rounded-full object-cover ring-2 ring-white/20"
               loading="lazy"
             />
-            Book a Free Call
-          </button>
+            <span>Book a call</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+            >
+              <path fillRule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clipRule="evenodd" />
+            </svg>
+          </a>
         </div>
       </section>
     </>

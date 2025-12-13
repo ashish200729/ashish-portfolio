@@ -1,6 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { ActivityCalendar } from 'react-activity-calendar';
 import { fetchGitHubStats } from '../services/github';
+import { useTheme } from '../context/ThemeContext';
 
 interface ContributionDay {
   date: string;
@@ -21,6 +22,7 @@ const GitHubGraph = memo(() => {
   const [githubData, setGithubData] = useState<GitHubData | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const { theme } = useTheme();
 
   // Fetch GitHub data
   const fetchData = async () => {
@@ -69,7 +71,7 @@ const GitHubGraph = memo(() => {
         <div className="flex items-center justify-center py-20">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-secondary">Loading GitHub stats...</p>
+            <p className="text-gray-500 dark:text-gray-400">Loading GitHub stats...</p>
           </div>
         </div>
       </div>
@@ -85,7 +87,7 @@ const GitHubGraph = memo(() => {
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
           <div>
-            <p className="text-secondary text-sm mb-2" style={{ opacity: 1, transform: 'none' }}>Featured</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-2" style={{ opacity: 1, transform: 'none' }}>Featured</p>
             <h2 className="text-2xl font-bold" style={{ opacity: 1, transform: 'none' }}>
               GitHub Activity
               {loading && (
@@ -98,7 +100,7 @@ const GitHubGraph = memo(() => {
           <p className="text-sm text-primary font-medium">
             Total: <span className="font-black">{totalContributions.toLocaleString()}</span> contributions
           </p>
-          <div className="flex items-center gap-2 text-sm text-white">
+          <div className="flex items-center gap-2 text-sm text-gray-900 dark:text-white">
             <span className="hidden sm:inline">Offline</span>
             <img
               src="/assets/cursor-ai.png"
@@ -116,7 +118,7 @@ const GitHubGraph = memo(() => {
 
       {/* Contribution Graph Container */}
       <div
-        className="relative bg-background/50 backdrop-blur-sm rounded-lg border border-black/10 dark:border-white/10 p-2 sm:p-4 md:p-6 group"
+        className="relative bg-white dark:bg-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-800 p-2 sm:p-4 md:p-6 group shadow-sm"
         title={`Last updated: ${getTimeAgo(lastUpdated)}`}
       >
         <div className="w-full overflow-hidden">
@@ -125,23 +127,21 @@ const GitHubGraph = memo(() => {
               <ActivityCalendar
                 data={data}
                 theme={{
-                  light: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+                  light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
                   dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
                 }}
+                colorScheme={theme}
                 blockSize={10}
                 blockMargin={3}
                 fontSize={11}
-                hideColorLegend={false}
-                hideMonthLabels={false}
-                hideTotalCount={true}
                 showWeekdayLabels={false}
                 style={{
-                  color: '#8b949e',
+                  color: theme === 'dark' ? '#8b949e' : '#57606a',
                   maxWidth: '100%'
                 }}
               />
             ) : (
-              <p className="text-secondary py-10">No contribution data available</p>
+              <p className="text-gray-500 dark:text-gray-400 py-10">No contribution data available</p>
             )}
           </div>
         </div>
