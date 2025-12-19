@@ -1,148 +1,151 @@
-import { Globe, Github } from 'lucide-react';
+import { Github, ArrowUpRight } from 'lucide-react';
+
+interface Project {
+  title: string;
+  description: string;
+  technologies: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+}
+
+const COMPLETED_PROJECTS: Project[] = [
+  {
+    title: "Library Management System",
+    description: "A desktop application with a modern tabbed GUI built using Java Swing. Features include full CRUD operations, real-time search, and a polished user interface.",
+    technologies: ["Java", "Swing"],
+    githubUrl: "https://github.com/ashish200729",
+  },
+  {
+    title: "Todo App",
+    description: "A clean and intuitive todo application for managing daily tasks. Features include add, edit, delete, and mark as complete functionalities with local storage persistence.",
+    technologies: ["HTML", "CSS", "JavaScript"],
+    githubUrl: "https://github.com/ashish200729",
+  },
+  {
+    title: "AI Website Builder",
+    description: "Designed and built a clean, user-friendly interface for an AI-powered website builder. Focused on intuitive UX, responsive layouts, and real-time visual feedback.",
+    technologies: ["Next.js 15", "TypeScript", "Claude AI", "PostgreSQL"],
+    githubUrl: "https://github.com/ashish200729",
+  },
+  {
+    title: "Discord Scrim Bot",
+    description: "A feature-rich Discord bot for esports scrim and tournament management. Handles team registration, match scheduling, and automated bracket generation.",
+    technologies: ["Discord.py", "Python", "PostgreSQL"],
+    githubUrl: "https://github.com/ashish200729",
+  }
+];
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="min-h-screen px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-      <div className="max-w-6xl mx-auto">
-        {/* Featured Project Section */}
-        <div className="mb-10 sm:mb-12 lg:mb-16">
-          <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-1 sm:mb-2">Featured</p>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 lg:mb-8">Featured Project</h2>
+    <section id="projects" className="min-h-screen px-6 py-24 bg-white dark:bg-[#0a0a0a]">
+      <div className="max-w-4xl mx-auto">
+        {/* Featured Project Header */}
+        <div className="mb-10">
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-3 uppercase tracking-[0.2em]">Currently Building</p>
+          <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Featured Project</h2>
+        </div>
 
-          <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-6 lg:p-8 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-            <div className="flex flex-col lg:flex-row justify-between items-start gap-4 sm:gap-6">
-              <div className="flex-1 w-full">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                  <img
-                    src="/assets/cursor-ai.png"
-                    alt="Cursor AI Logo"
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex-shrink-0"
-                  />
-                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold leading-tight">Open Source AI Editor (Cursor Alternative)</h3>
+        {/* Featured Project */}
+        <div className="mb-16 sm:mb-24">
+          <div className="group relative border border-gray-100 dark:border-gray-800/60 bg-gradient-to-br from-gray-50/50 to-white dark:from-gray-900/20 dark:to-transparent rounded-2xl sm:rounded-[2rem] p-5 sm:p-8 md:p-10 transition-all duration-500 hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-lg hover:shadow-gray-100/50 dark:hover:shadow-none">
+
+            {/* Mobile: Stack everything vertically | Desktop: More complex layout */}
+            <div className="flex flex-col gap-5 sm:gap-8">
+
+              {/* Header Row: Icon, Title & Badge */}
+              <div className="flex items-start gap-4">
+                {/* Project Icon */}
+                <div className="shrink-0 size-12 sm:size-14 rounded-xl sm:rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-none">
+                  <img src="/assets/cursor-ai.png" alt="Cursor AI" className="size-6 sm:size-8 object-contain" />
                 </div>
-                <p className="text-sm sm:text-base lg:text-lg text-gray-500 dark:text-gray-400 mb-4 sm:mb-6 leading-relaxed">
-                  Building a comprehensive, open-source alternative to Cursor.com, architected directly on the Visual Studio Code (Code OSS) source code.
-                  This project re-engineers the standard VS Code experience into an AI-native IDE, featuring deep LLM integration for context-aware code generation, intelligent refactoring, and autonomous agent capabilities.
-                  It bridges the gap between a world-class editor and next-gen AI assistance.
-                </p>
-                <div className="mb-4 sm:mb-6">
-                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</p>
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                    <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">VS Code (Code OSS)</span>
-                    <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">TypeScript</span>
-                    <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Electron / Web</span>
-                    <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">AI Agents</span>
+
+                {/* Title & Badge Container */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white leading-tight">
+                      Open Source AI Editor
+                    </h3>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] sm:text-xs font-medium rounded-full border border-emerald-500/20 w-fit shrink-0">
+                      <span className="relative flex size-1.5 sm:size-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full size-1.5 sm:size-2 bg-emerald-500"></span>
+                      </span>
+                      In Progress
+                    </span>
                   </div>
+                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    VS Code OSS • TypeScript • Electron
+                  </p>
                 </div>
               </div>
-              <div className="flex gap-3 mt-2 lg:mt-0">
-                <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                <a href="https://github.com/ashish200729" target="_blank" rel="noopener noreferrer">
-                  <Github className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                </a>
+
+              {/* Description */}
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm sm:text-base md:text-lg">
+                Building a comprehensive, open-source alternative to Cursor.com. This project re-engineers VS Code into an AI-native IDE with deep LLM integration for context-aware code generation and autonomous agent capabilities.
+              </p>
+
+              {/* Technologies */}
+              <div className="flex flex-wrap gap-2">
+                {["VS Code OSS", "TypeScript", "Electron", "AI Agents"].map((tech) => (
+                  <span key={tech} className="px-3 py-1 sm:px-4 sm:py-1.5 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-full text-[10px] sm:text-xs font-semibold text-gray-600 dark:text-gray-400 tracking-tight">
+                    {tech}
+                  </span>
+                ))}
               </div>
+
+              {/* CTA Button - Full width on mobile */}
+              <a
+                href="#"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all w-full sm:w-auto sm:self-start"
+              >
+                <Github className="size-4" />
+                Coming Soon
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Completed Projects Section */}
-        <div className="mb-8 sm:mb-10 lg:mb-12">
-          <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-1 sm:mb-2">Archive</p>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6 lg:mb-8">Completed Projects</h2>
+        {/* Completed Projects Header */}
+        <div className="mb-10">
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-3 uppercase tracking-[0.2em]">Archive</p>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Completed Projects</h2>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-            {/* Library Management System */}
-            <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 lg:p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-              <div className="flex justify-between items-start mb-3 sm:mb-4">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">Library Management System</h3>
-                <div className="flex gap-2 flex-shrink-0 ml-2">
-                  <a href="https://github.com/ashish200729" target="_blank" rel="noopener noreferrer">
-                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                  </a>
+        {/* Completed Project Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {COMPLETED_PROJECTS.map((project, index) => (
+            <div key={index} className="group relative border border-inset border-gray-100 dark:border-gray-800/40 bg-white dark:bg-transparent rounded-[1.5rem] p-8 transition-all duration-500 hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-xl hover:shadow-gray-100/50 dark:hover:shadow-none">
+              <div className="flex justify-between items-start mb-6">
+                <h4 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-500 transition-colors duration-300">
+                  {project.title}
+                </h4>
+                <div className="flex items-center gap-4">
+                  {project.githubUrl && (
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all transform hover:scale-110">
+                      <Github className="size-5" />
+                    </a>
+                  )}
+                  {project.liveUrl && (
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all transform hover:scale-110">
+                      <ArrowUpRight className="size-5" />
+                    </a>
+                  )}
                 </div>
               </div>
-              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 leading-relaxed">
-                A desktop application with a modern tabbed GUI built using Java Swing. Features include full CRUD operations for books, real-time search across all fields, input validation, and a polished UI with custom colors and hover effects.
+
+              <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed mb-8 h-auto">
+                {project.description}
               </p>
-              <div className="mb-2 sm:mb-4">
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</p>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Java</span>
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Swing</span>
-                </div>
+
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {project.technologies.map((tech) => (
+                  <span key={tech} className="px-3 py-1 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-lg text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
-
-            {/* Todo App */}
-            <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 lg:p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-              <div className="flex justify-between items-start mb-3 sm:mb-4">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">Todo App</h3>
-                <div className="flex gap-2 flex-shrink-0 ml-2">
-                  <a href="https://github.com/ashish200729" target="_blank" rel="noopener noreferrer">
-                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                  </a>
-                </div>
-              </div>
-              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 leading-relaxed">
-                A clean and intuitive todo application for managing daily tasks. Features include add, edit, delete, and mark as complete functionalities with local storage persistence.
-              </p>
-              <div className="mb-2 sm:mb-4">
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</p>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">HTML</span>
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">CSS</span>
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">JavaScript</span>
-                </div>
-              </div>
-            </div>
-
-            {/* AI Website Builder */}
-            <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 lg:p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-              <div className="flex justify-between items-start mb-3 sm:mb-4">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">AI Website Builder</h3>
-                <div className="flex gap-2 flex-shrink-0 ml-2">
-                  <a href="https://github.com/ashish200729" target="_blank" rel="noopener noreferrer">
-                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                  </a>
-                </div>
-              </div>
-              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 leading-relaxed">
-                Designed and built a clean, user-friendly interface for an AI-powered website builder. Focused on intuitive UX, responsive layouts, and real-time visual feedback to enhance the overall user experience.
-              </p>
-              <div className="mb-2 sm:mb-4">
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</p>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Next.js 15</span>
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">TypeScript</span>
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Claude AI</span>
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">PostgreSQL</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Discord Scrim Bot */}
-            <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 lg:p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-              <div className="flex justify-between items-start mb-3 sm:mb-4">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">Discord Scrim Bot</h3>
-                <div className="flex gap-2 flex-shrink-0 ml-2">
-                  <a href="https://github.com/ashish200729" target="_blank" rel="noopener noreferrer">
-                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                  </a>
-                </div>
-              </div>
-              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 leading-relaxed">
-                A feature-rich Discord bot for esports scrim and tournament management. Handles team registration, match scheduling, score tracking, leaderboards, and automated bracket generation.
-              </p>
-              <div className="mb-2 sm:mb-4">
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</p>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Discord.py</span>
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Python</span>
-                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">PostgreSQL</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
