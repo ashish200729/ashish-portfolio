@@ -51,89 +51,98 @@ export default function ProjectsSection() {
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6 lg:mb-8">Completed Projects</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            {/* Library Management System */}
             <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 lg:p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
               <div className="flex justify-between items-start mb-3 sm:mb-4">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">UltraBalancer</h3>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">Library Management System</h3>
                 <div className="flex gap-2 flex-shrink-0 ml-2">
-                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                  <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
+                  <a href="https://github.com/ashish200729" target="_blank" rel="noopener noreferrer">
+                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
+                  </a>
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 leading-relaxed">
-                High-performance C/C++ load balancer designed for 1M+ RPS throughput with NUMA-aware architecture
+                A desktop application with a modern tabbed GUI built using Java Swing. Features include full CRUD operations for books, real-time search across all fields, input validation, and a polished UI with custom colors and hover effects.
               </p>
               <div className="mb-2 sm:mb-4">
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</p>
-                <div className="flex gap-2">
-                  <span className="text-xl sm:text-2xl">🌊</span>
-                  <span className="text-xl sm:text-2xl">🌊</span>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Java</span>
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Swing</span>
                 </div>
               </div>
             </div>
 
+            {/* Todo App */}
             <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 lg:p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
               <div className="flex justify-between items-start mb-3 sm:mb-4">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">aigit</h3>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">Todo App</h3>
                 <div className="flex gap-2 flex-shrink-0 ml-2">
-                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                  <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
+                  <a href="https://github.com/ashish200729" target="_blank" rel="noopener noreferrer">
+                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
+                  </a>
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 leading-relaxed">
-                A contemporary Git client merging traditional version control with AI capabilities to boost developer...
+                A clean and intuitive todo application for managing daily tasks. Features include add, edit, delete, and mark as complete functionalities with local storage persistence.
               </p>
               <div className="mb-2 sm:mb-4">
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</p>
-                <div className="flex gap-2">
-                  <span className="text-xl sm:text-2xl">⚙️</span>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">HTML</span>
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">CSS</span>
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">JavaScript</span>
                 </div>
               </div>
             </div>
 
+            {/* AI Website Builder */}
             <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 lg:p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
               <div className="flex justify-between items-start mb-3 sm:mb-4">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">SSH Honeypot</h3>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">AI Website Builder</h3>
                 <div className="flex gap-2 flex-shrink-0 ml-2">
-                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                  <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
+                  <a href="https://github.com/ashish200729" target="_blank" rel="noopener noreferrer">
+                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
+                  </a>
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 leading-relaxed">
-                An SSH honeypot developed for cybersecurity training and educational purposes, helping professionals...
+                Designed and built a clean, user-friendly interface for an AI-powered website builder. Focused on intuitive UX, responsive layouts, and real-time visual feedback to enhance the overall user experience.
               </p>
               <div className="mb-2 sm:mb-4">
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</p>
-                <div className="flex gap-2">
-                  <span className="text-xl sm:text-2xl">⚙️</span>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Next.js 15</span>
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">TypeScript</span>
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Claude AI</span>
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">PostgreSQL</span>
                 </div>
               </div>
             </div>
 
+            {/* Discord Scrim Bot */}
             <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 lg:p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
               <div className="flex justify-between items-start mb-3 sm:mb-4">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">sandbox-runtime</h3>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">Discord Scrim Bot</h3>
                 <div className="flex gap-2 flex-shrink-0 ml-2">
-                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
-                  <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
+                  <a href="https://github.com/ashish200729" target="_blank" rel="noopener noreferrer">
+                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer" />
+                  </a>
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 leading-relaxed">
-                Hardcore Linux sandbox for untrusted code execution using namespaces, cgroups v2, seccomp-BPF, and capabilit...
+                A feature-rich Discord bot for esports scrim and tournament management. Handles team registration, match scheduling, score tracking, leaderboards, and automated bracket generation.
               </p>
               <div className="mb-2 sm:mb-4">
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</p>
-                <div className="flex gap-2">
-                  <span className="text-xl sm:text-2xl">🌊</span>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Discord.py</span>
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">Python</span>
+                  <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-xs sm:text-sm text-gray-700 dark:text-gray-300">PostgreSQL</span>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="text-center">
-          <button className="px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 rounded-lg transition-colors">
-            Show all projects
-          </button>
         </div>
       </div>
     </section>
