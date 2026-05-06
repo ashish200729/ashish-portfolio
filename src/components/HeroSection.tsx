@@ -1,8 +1,9 @@
-import { Moon, Sun, Github, Youtube, Instagram, Mail, Globe } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
+import { Moon, Sun, Github, Youtube, Instagram, Mail } from 'lucide-react';
+import SpotifyPlayer from './SpotifyPlayer';
+import { useTheme } from '../context/theme';
 
 export default function HeroSection({ scrollToSection }: { scrollToSection: (id: string) => void }) {
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
@@ -163,49 +164,7 @@ export default function HeroSection({ scrollToSection }: { scrollToSection: (id:
               </a>
             </div>
 
-            <div className="w-full max-w-2xl mt-2">
-              <div className="flex flex-col gap-3 text-sm p-3 rounded-lg bg-white dark:bg-gray-900/30 border border-gray-200 dark:border-gray-800/50 shadow-sm dark:shadow-inner flex-1 shadow-gray-200 dark:shadow-none">
-                <div className="flex items-center gap-3">
-                  <img
-                    alt="Album art"
-                    width="48"
-                    height="48"
-                    className="rounded-md shadow-inner ring-1 ring-black/10 dark:ring-white/10"
-                    src="https://i.scdn.co/image/ab67616d0000b27383141000ee8ce3b893a0b425"
-                    loading="lazy"
-                  />
-                  <div className="flex flex-col gap-1 flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <div className="p-1 rounded bg-green-500/10 shadow-inner transition-opacity">
-                        <img
-                          alt="Spotify"
-                          width="14"
-                          height="14"
-                          className="filter drop-shadow-sm"
-                          src="/assets/spotify.svg"
-                          loading="lazy"
-                        />
-                      </div>
-                      <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Last played</span>
-                    </div>
-                    <div className="flex flex-col min-h-[2.5rem] max-h-[2.5rem]" style={{ opacity: 1, transform: 'none' }}>
-                      <a
-                        href="https://open.spotify.com/track/5ThyDv6aRVU8AH4vXQNldF"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-medium truncate text-gray-900 dark:text-white hover:underline hover:text-green-600 dark:hover:text-green-500 transition-colors cursor-pointer h-5 inline-block max-w-full"
-                        title="Open in Spotify"
-                      >
-                        Finding Her
-                      </a>
-                      <span className="text-xs text-gray-500 dark:text-gray-400 truncate h-4">by Kushagra, Bharath, Saaheal</span>
-                    </div>
-                  </div>
-
-                </div>
-                <audio className="hidden" loop=""></audio>
-              </div>
-            </div>
+            <SpotifyPlayer />
           </div>
         </div>
       </section>

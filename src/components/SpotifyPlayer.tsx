@@ -1,4 +1,4 @@
-import { Play, Pause, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import { useSpotify } from '../hooks/useSpotify';
 
 export default function SpotifyPlayer() {
@@ -7,10 +7,8 @@ export default function SpotifyPlayer() {
     currentTrack,
     isLoading,
     error,
-    play,
-    pause,
     refreshTrack,
-  } = useSpotify(5000); // Refresh every 5 seconds
+  } = useSpotify(30000);
 
   // Loading state
   if (isLoading && !currentTrack) {
@@ -29,23 +27,31 @@ export default function SpotifyPlayer() {
     );
   }
 
-  // Error state
   if (error && !currentTrack) {
     return (
       <div className="w-full max-w-2xl mt-2">
-        <div className="flex flex-col gap-3 text-sm p-3 rounded-lg bg-red-900/20 border border-red-800/50 shadow-inner">
+        <div className="flex flex-col gap-3 text-sm p-3 rounded-lg bg-white dark:bg-gray-900/30 border border-gray-200 dark:border-gray-800/50 shadow-inner">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="text-red-500 text-xl">⚠️</div>
-              <div className="flex flex-col gap-1">
-                <span className="text-red-400 text-sm font-medium">Error loading Spotify</span>
-                <span className="text-gray-500 dark:text-gray-400 text-xs">{error}</span>
+              <div className="w-12 h-12 rounded-md bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                <img
+                  alt="Spotify"
+                  width="24"
+                  height="24"
+                  className="filter drop-shadow-sm"
+                  src="/assets/spotify.svg"
+                />
+              </div>
+              <div className="flex flex-col gap-1 min-w-0">
+                <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Spotify</span>
+                <span className="text-gray-900 dark:text-white text-sm">No recent activity</span>
               </div>
             </div>
             <button
               onClick={refreshTrack}
-              className="p-2 hover:bg-gray-200 dark:bg-gray-800 rounded-md transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors"
               aria-label="Retry"
+              title="Retry Spotify activity"
             >
               <RefreshCw className="h-4 w-4 text-gray-500 dark:text-gray-400" />
             </button>
@@ -84,14 +90,6 @@ export default function SpotifyPlayer() {
   const albumArt = currentTrack.album.images[0]?.url || '/assets/spotify.svg';
   const artistNames = currentTrack.artists.map((artist) => artist.name).join(', ');
 
-  const handlePlayPause = async () => {
-    if (isPlaying) {
-      pause();
-    } else {
-      await play();
-    }
-  };
-
   return (
     <div className="w-full max-w-2xl mt-2">
       <div className="flex flex-col gap-3 text-sm p-3 rounded-lg bg-white dark:bg-gray-900/30 border border-gray-200 dark:border-gray-800/50 shadow-inner">
@@ -114,7 +112,9 @@ export default function SpotifyPlayer() {
                   src="/assets/spotify.svg"
                 />
               </div>
-              <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Last played</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                {isPlaying ? 'Now playing' : 'Last played'}
+              </span>
             </div>
             <div className="flex flex-col min-h-[2.5rem] max-h-[2.5rem]" style={{ opacity: 1, transform: 'none' }}>
               <a
@@ -130,7 +130,6 @@ export default function SpotifyPlayer() {
             </div>
           </div>
         </div>
-        <audio className="hidden" loop=""></audio>
       </div>
     </div>
   );

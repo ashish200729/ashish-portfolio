@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { ActivityCalendar } from 'react-activity-calendar';
 import { fetchGitHubStats } from '../services/github';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../context/theme';
 
 interface ContributionDay {
   date: string;

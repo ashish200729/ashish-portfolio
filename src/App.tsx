@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense } from 'react';
 import HeroSection from './components/HeroSection';
 
 // Lazy load heavy sections for better performance
@@ -14,10 +14,7 @@ const SectionLoader = () => (
 );
 
 function App() {
-  const [activeSection, setActiveSection] = useState('home');
-
   const scrollToSection = (sectionId: string) => {
-    setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
