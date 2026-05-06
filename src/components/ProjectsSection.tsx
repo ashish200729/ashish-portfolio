@@ -10,15 +10,22 @@ interface Project {
 
 const COMPLETED_PROJECTS: Project[] = [
   {
-    title: "Library Management System",
-    description: "A desktop application with a modern tabbed GUI built using Java Swing. Features include full CRUD operations, real-time search, and a polished user interface.",
-    technologies: ["Java", "Swing"],
-    githubUrl: "https://github.com/ashish200729",
+    title: "Milkey MCP",
+    description: "A premium, hosted Model Context Protocol (MCP) skills platform for AI agents. It centralizes reusable skill delivery across tools like Cursor and Claude Code via an official SDK and REST API.",
+    technologies: ["Next.js", "TypeScript", "Model Context Protocol", "Go", "Hono.js", "React", "Tailwind CSS"],
+    liveUrl: "https://milkeyai.com/",
   },
   {
-    title: "Todo App",
-    description: "A clean and intuitive todo application for managing daily tasks. Features include add, edit, delete, and mark as complete functionalities with local storage persistence.",
-    technologies: ["HTML", "CSS", "JavaScript"],
+    title: "Vexelity AI (Orbit IDE)",
+    description: "A privacy-first AI code editor and Cursor alternative. Designed for a focused IDE workflow, it allows local-first AI development with deep, multi-model execution support.",
+    technologies: ["TypeScript", "Electron", "VS Code Source", "AI Integration", "Tailwind CSS", "React"],
+    liveUrl: "https://vexelityai.com/",
+    githubUrl: "https://github.com/ashish200729/orbiteditor",
+  },
+  {
+    title: "Bolt.new Web Client",
+    description: "A comprehensive client application leveraging the bolt.new environment to build, edit, and orchestrate web-based projects natively in the browser through AI-driven generation.",
+    technologies: ["TypeScript", "React", "Vite", "WebContainers"],
     githubUrl: "https://github.com/ashish200729",
   },
   {
@@ -41,7 +48,7 @@ export default function ProjectsSection() {
       <div className="max-w-4xl mx-auto">
         {/* Featured Project Header */}
         <div className="mb-10">
-          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-3 uppercase tracking-[0.2em]">Currently Building</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-3 uppercase tracking-[0.2em]">Flagship Product</p>
           <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Featured Project</h2>
         </div>
 
@@ -56,51 +63,63 @@ export default function ProjectsSection() {
               <div className="flex items-start gap-4">
                 {/* Project Icon */}
                 <div className="shrink-0 size-12 sm:size-14 rounded-xl sm:rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-none">
-                  <img src="/assets/cursor-ai.png" alt="Cursor AI" className="size-6 sm:size-8 object-contain" />
+                  <img src="/assets/cursor-ai.png" alt="Orbit IDE" className="size-6 sm:size-8 object-contain" />
                 </div>
 
                 {/* Title & Badge Container */}
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white leading-tight">
-                      Open Source AI Editor
+                      Vexelity AI (Orbit IDE)
                     </h3>
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] sm:text-xs font-medium rounded-full border border-emerald-500/20 w-fit shrink-0">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[11px] sm:text-xs font-medium rounded-full border border-blue-500/20 w-fit shrink-0">
                       <span className="relative flex size-1.5 sm:size-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full size-1.5 sm:size-2 bg-emerald-500"></span>
+                        <span className="relative inline-flex rounded-full size-1.5 sm:size-2 bg-blue-500"></span>
                       </span>
-                      In Progress
+                      Live & Shipped
                     </span>
                   </div>
                   <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    VS Code OSS • TypeScript • Electron
+                    TypeScript • Electron • VS Code Source
                   </p>
                 </div>
               </div>
 
               {/* Description */}
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm sm:text-base md:text-lg">
-                Building a comprehensive, open-source alternative to Cursor.com. This project re-engineers VS Code into an AI-native IDE with deep LLM integration for context-aware code generation and autonomous agent capabilities.
+                A privacy-first AI code editor and comprehensive alternative to Cursor. Deeply integrates multi-model AI execution natively into the VS Code architecture, supporting local-first coding with powerful autonomous agent workflows.
               </p>
 
               {/* Technologies */}
               <div className="flex flex-wrap gap-2">
-                {["VS Code OSS", "TypeScript", "Electron", "AI Agents"].map((tech) => (
+                {["TypeScript", "Electron", "VS Code Source", "AI Integration", "React", "Tailwind CSS"].map((tech) => (
                   <span key={tech} className="px-3 py-1 sm:px-4 sm:py-1.5 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-full text-[10px] sm:text-xs font-semibold text-gray-600 dark:text-gray-400 tracking-tight">
                     {tech}
                   </span>
                 ))}
               </div>
 
-              {/* CTA Button - Full width on mobile */}
-              <a
-                href="#"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all w-full sm:w-auto sm:self-start"
-              >
-                <Github className="size-4" />
-                Coming Soon
-              </a>
+              {/* CTA Buttons - Full width on mobile */}
+              <div className="flex flex-col sm:flex-row gap-3 mt-2">
+                <a
+                  href="https://vexelityai.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-100 transition-all w-full sm:w-auto"
+                >
+                  <ArrowUpRight className="size-4" />
+                  Visit Website
+                </a>
+                <a
+                  href="https://github.com/ashish200729/orbiteditor"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all w-full sm:w-auto"
+                >
+                  <Github className="size-4" />
+                  View Source
+                </a>
+              </div>
             </div>
           </div>
         </div>

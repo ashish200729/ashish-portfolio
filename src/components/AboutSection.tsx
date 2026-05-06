@@ -24,7 +24,7 @@ export default function AboutSection() {
             <div className="mt-4">
               <h3 className="text-2xl font-bold">Ashish Prajapati</h3>
               <p className="text-gray-500 dark:text-gray-400 mt-4">
-                I'm a Full Stack web developer and Open Source Contributor, I love building products to solve real-world problems. I'm specialized in building MVP's.
+                I'm a Full Stack web developer and Ai Engineer, I love building products to solve real-world problems. I'm specialized in building MVP's.
               </p>
               <p className="text-gray-500 dark:text-gray-400 mt-8 font-bold">Skills</p>
               <div className="flex flex-wrap gap-2">

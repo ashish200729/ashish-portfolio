@@ -85,11 +85,11 @@ export default function HeroSection({ scrollToSection }: { scrollToSection: (id:
 
             <div className="space-y-4 w-full">
               <h1 className="text-3xl md:text-3xl font-bold leading-tight text-black dark:text-white">
-                Hi, I'm Ashish — <span className="text-gray-500">A Full Stack web developer.</span>
+                Hi, I'm Ashish <br></br> <span className="text-gray-500">I build full-stack web apps and AI-powered systems.</span>
               </h1>
 
-              <div className="text-base text-gray-500 dark:text-gray-400 space-y-2 leading-relaxed">
-                <p className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
+              <div className="text-base text-gray-500 dark:text-gray-400 space-y-4 leading-relaxed">
+                <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
                   <span>I build interactive web apps using</span>
                   <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 dark:bg-white/15 border border-gray-300 dark:border-white/30 rounded-md text-gray-900 dark:text-white text-sm font-medium hover:bg-gray-200 dark:hover:bg-white/20 transition-colors">
                     <span className="text-blue-500 font-bold text-xs">TS</span>
@@ -110,15 +110,15 @@ export default function HeroSection({ scrollToSection }: { scrollToSection: (id:
                     <span className="text-yellow-500">🐍</span>
                     Python
                   </a>
+                  <span>and</span>
                   <a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 dark:bg-white/15 border border-gray-300 dark:border-white/30 rounded-md text-gray-900 dark:text-white text-sm font-medium hover:bg-gray-200 dark:hover:bg-white/20 transition-colors">
                     <span className="text-blue-400">🐘</span>
                     PostgreSQL
                   </a>
-                  <span>. With a focus on</span>
-                  <b className="text-gray-900 dark:text-white">UI</b>
-                  <span>design. Enthusiastic about</span>
-                  <b className="text-gray-900 dark:text-white">Machine Learning & AI</b>
-                  <span>, driven by a keen eye for design.</span>
+                  <span>.</span>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300">
+                  With a focus on <strong className="text-gray-900 dark:text-white font-medium">UI design</strong>, I'm deep into <strong className="text-gray-900 dark:text-white font-medium">Artificial Intelligence</strong> and building production-ready apps powered by AI and LLMs.
                 </p>
               </div>
             </div>

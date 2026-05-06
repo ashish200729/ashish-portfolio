@@ -26,18 +26,18 @@ export default function WorkSection() {
                 </div>
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold blur-[5px]">good day :3</h3>
-                    <a target="_blank" rel="noopener noreferrer" className="size-4 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors" href="#">
+                    <h3 className="text-lg font-bold">Milkey MCP</h3>
+                    <a target="_blank" rel="noopener noreferrer" className="size-4 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors" href="https://milkeyai.com/">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256">
                         <path d="M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm87.62,96H175.79C174,83.49,159.94,57.67,148.41,42.4A88.19,88.19,0,0,1,215.63,120ZM96.23,136h63.54c-2.31,41.61-22.23,67.11-31.77,77C118.45,203.1,98.54,177.6,96.23,136Zm0-16C98.54,78.39,118.46,52.89,128,43c9.55,9.93,29.46,35.43,31.77,77Zm11.36-77.6C96.06,57.67,82,83.49,80.21,120H40.37A88.19,88.19,0,0,1,107.59,42.4ZM40.37,136H80.21c1.82,36.51,15.85,62.33,27.38,77.6A88.19,88.19,0,0,1,40.37,136Zm108,77.6c11.53-15.27,25.56-41.09,27.38-77.6h39.84A88.19,88.19,0,0,1,148.41,213.6Z"></path>
                       </svg>
                     </a>
-                    <a target="_blank" rel="noopener noreferrer" className="size-4 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors" href="#">
+                    <a target="_blank" rel="noopener noreferrer" className="size-4 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors" href="https://x.com/">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256">
                         <path d="M214.75,211.71l-62.6-98.38,61.77-67.95a8,8,0,0,0-11.84-10.76L143.24,99.34,102.75,35.71A8,8,0,0,0,96,32H48a8,8,0,0,0-6.75,12.3l62.6,98.37-61.77,68a8,8,0,1,0,11.84,10.76l58.84-64.72,40.49,63.63A8,8,0,0,0,160,224h48a8,8,0,0,0,6.75-12.29ZM164.39,208,62.57,48h29L193.43,208Z"></path>
                       </svg>
                     </a>
-                    <a target="_blank" rel="noopener noreferrer" className="size-4 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors" href="#">
+                    <a target="_blank" rel="noopener noreferrer" className="size-4 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors" href="https://github.com/ashish200729">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256">
                         <path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a41.74,41.74,0,0,1,6.9-22.48A8,8,0,0,0,80,73.83a43.81,43.81,0,0,1,.79-33.58,43.88,43.88,0,0,1,32.32,20.06A8,8,0,0,0,119.82,64h32.35a8,8,0,0,0,6.74-3.69,43.87,43.87,0,0,1,32.32-20.06A43.81,43.81,0,0,1,192,73.83a8.09,8.09,0,0,0,1,7.65A41.72,41.72,0,0,1,200,104Z"></path>
                       </svg>
@@ -47,11 +47,11 @@ export default function WorkSection() {
                       Working
                     </div>
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Founding Frontend Engineer</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Founder & Engineer</p>
                 </div>
               </div>
               <div className="text-gray-500 dark:text-gray-400 flex flex-col md:text-right">
-                <p>September 2025 - Present</p>
+                <p>June 2025 - Present</p>
                 <p>India (Remote)</p>
               </div>
             </div>
@@ -60,45 +60,41 @@ export default function WorkSection() {
               <div>
                 <h4 className="text-md mt-4 mb-2 font-semibold">Technologies &amp; Tools</h4>
                 <div className="flex flex-wrap gap-2">
-                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://remix.run/">
-                    <span className="font-bold text-black dark:text-white">R</span>
-                    <p className="ml-1 text-sm font-bold">Remix</p>
-                  </a>
-                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://webcontainers.io/">
-                    <span className="text-blue-500 font-bold">⚡</span>
-                    <p className="ml-1 text-sm font-bold">WebContainers</p>
-                  </a>
-                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://tailwindcss.com/">
-                    <span className="text-cyan-400">~</span>
-                    <p className="ml-1 text-sm font-bold">Tailwind CSS</p>
+                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://nextjs.org/">
+                    <span className="font-bold text-black dark:text-white">N</span>
+                    <p className="ml-1 text-sm font-bold">Next.js</p>
                   </a>
                   <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://typescriptlang.org/">
                     <span className="text-blue-500 font-bold text-xs">TS</span>
                     <p className="ml-1 text-sm font-bold">TypeScript</p>
                   </a>
+                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://modelcontextprotocol.io/">
+                    <span className="text-purple-500 font-bold">M</span>
+                    <p className="ml-1 text-sm font-bold">Model Context Protocol</p>
+                  </a>
+                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://go.dev/">
+                    <span className="text-cyan-500 font-bold">Go</span>
+                    <p className="ml-1 text-sm font-bold">Go</p>
+                  </a>
+                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://hono.dev/">
+                    <span className="text-orange-500 font-bold">H</span>
+                    <p className="ml-1 text-sm font-bold">Hono.js</p>
+                  </a>
                   <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://react.dev/">
                     <span className="text-cyan-400">⚛</span>
                     <p className="ml-1 text-sm font-bold">React</p>
                   </a>
-                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://vitejs.dev/">
-                    <span className="text-purple-500 font-bold">⚡</span>
-                    <p className="ml-1 text-sm font-bold">Vite</p>
-                  </a>
-                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://sdk.vercel.ai/docs">
-                    <span className="text-black dark:text-white font-bold">AI</span>
-                    <p className="ml-1 text-sm font-bold">Vercel AI SDK</p>
-                  </a>
-                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://github.com/shikijs/shiki">
-                    <span className="text-yellow-400 font-bold">S</span>
-                    <p className="ml-1 text-sm font-bold">Shiki</p>
+                  <a target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm bg-gray-100 dark:bg-white/15 border border-dashed border-gray-300 dark:border-white/30 py-1 px-2 rounded-md self-end text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-colors" href="https://tailwindcss.com/">
+                    <span className="text-cyan-400">~</span>
+                    <p className="ml-1 text-sm font-bold">Tailwind CSS</p>
                   </a>
                 </div>
               </div>
-              <div className="text-gray-500 dark:text-gray-400 flex flex-col mt-4">
-                <p>• Spearheading the development of an advanced AI-powered web development agent that enables users to prompt, run, edit, and deploy full-stack applications directly in the browser.</p>
-                <p>• Engineering a sophisticated browser-based development environment utilizing WebContainers for secure, instant client-side Node.js execution and seamless preview capabilities.</p>
-                <p>• Implementing complex state management and real-time file system synchronization to orchestrate AI code generation, modification, and project persistence.</p>
-                <p>• Crafting a premium, highly responsive user interface that unifies conversational AI with a full-featured code editor, ensuring a superior developer experience.</p>
+              <div className="text-gray-500 dark:text-gray-400 flex flex-col mt-4 gap-1">
+                <p>• Built Milkey as premium hosted skills infrastructure for AI agents, teams, and AI-powered products.</p>
+                <p>• Engineered a hosted MCP flow that lets Cursor, Claude Code, Codex, and other agents resolve reusable skills without local setup drift.</p>
+                <p>• Developed the product-facing REST API using <strong>Hono.js</strong> and an official <strong>TypeScript</strong> SDK for embedding Milkey skills into existing AI stacks.</p>
+                <p>• Built the <strong>Next.js</strong> dashboard for managing skills, access, delivery, and usage visibility across integrations.</p>
               </div>
             </div>
           </div>
