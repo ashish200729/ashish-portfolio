@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Ashish Portfolio
 
 Personal portfolio for Ashish Prajapati, built with React, TypeScript, Vite, Tailwind CSS, and a small Vercel serverless endpoint for Spotify activity.
