@@ -3,7 +3,6 @@ import HeroSection from './components/HeroSection';
 
 // Lazy load heavy sections for better performance
 const WorkSection = lazy(() => import('./components/WorkSection'));
-const ProjectsSection = lazy(() => import('./components/ProjectsSection'));
 const AboutSection = lazy(() => import('./components/AboutSection'));
 
 // Loading fallback component
@@ -26,10 +25,6 @@ function App() {
       <main className="pt-8">
         <Suspense fallback={<SectionLoader />}>
           <WorkSection />
-        </Suspense>
-
-        <Suspense fallback={<SectionLoader />}>
-          <ProjectsSection />
         </Suspense>
 
         <Suspense fallback={<SectionLoader />}>
