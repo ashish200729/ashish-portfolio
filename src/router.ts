@@ -1,4 +1,5 @@
 import { useEffect, useSyncExternalStore } from 'react';
+import type { PageMeta } from './data/seo';
 
 /**
  * A tiny History API router. The site has three kinds of page, so a full
@@ -88,13 +89,25 @@ export function navigate(to: string, options: { replace?: boolean } = {}) {
 }
 
 /** Scrolls and moves focus after a route change, once the new page is in place. */
-export function useRouteEffects(pathname: string, title: string, description: string) {
+export function useRouteEffects(pathname: string, meta: PageMeta) {
+  const { title, description, path, noindex } = meta;
   useEffect(() => {
     document.title = title;
-    document.querySelector('meta[name="description"]')?.setAttribute('content', description);
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
-    document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
-  }, [title, description]);
+    const set = (selector: string, attribute: string, value: string) => document.querySelector(selector)?.setAttribute(attribute, value);
+    set('meta[name="description"]', 'content', description);
+    set('meta[property="og:title"]', 'content', title);
+    set('meta[property="og:description"]', 'content', description);
+    set('meta[name="twitter:title"]', 'content', title);
+    set('meta[name="twitter:description"]', 'content', description);
+    set('meta[name="robots"]', 'content', noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+    // Keep the build-time production origin; only the path follows navigation.
+    const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (canonical) {
+      const url = new URL(path, canonical.href).href;
+      canonical.href = url;
+      set('meta[property="og:url"]', 'content', url);
+    }
+  }, [title, description, path, noindex]);
 
   useEffect(() => {
     const scroll = pendingScroll;

@@ -9,7 +9,7 @@ export default function AboutSection() {
       <section id="hire" className="reading-column pt-12" aria-labelledby="about-title">
         <h2 id="about-title" className="section-title">About me</h2>
         <div className="flex items-start gap-4">
-          <img src="/image.jpg" alt="Ashish's avatar" width="64" height="64" className="size-16 shrink-0 rounded-xl object-cover" loading="lazy" />
+          <img src="/image.jpg" alt="Ashish Prajapati" width="64" height="64" className="size-16 shrink-0 rounded-xl object-cover" loading="lazy" />
           <div>
             <h3 className="text-sm font-medium">Ashish Prajapati</h3>
             <p className="mt-2 text-sm leading-[1.85] text-ink-2">I'm an AI engineer, full-stack developer, and AI expert. I love building products to solve real-world problems, and I specialize in building MVPs and AI-powered applications.</p>

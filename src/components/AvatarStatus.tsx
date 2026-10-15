@@ -41,7 +41,7 @@ export default function AvatarStatus() {
       }}
     >
       <Link to="/" aria-label="Ashish Prajapati — home" className="block rounded-xl" aria-describedby={open ? 'cursor-activity' : undefined}>
-        <img src="/image.jpg" alt="Ashish's avatar" width="44" height="44" className="size-11 rounded-xl object-cover" />
+        <img src="/image.jpg" alt="Ashish Prajapati" width="44" height="44" className="size-11 rounded-xl object-cover" />
       </Link>
       <button type="button" className="absolute -bottom-2 -right-2 flex size-6 items-center justify-center rounded-full" aria-label="Cursor activity" title="Cursor activity" aria-expanded={open} aria-controls="cursor-activity" onClick={() => { setPinned(value => !value); setFocused(false); }}>
         <span className="size-3.5 rounded-full border-2 border-canvas bg-ink-3" aria-hidden="true" />

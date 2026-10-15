@@ -5,6 +5,7 @@ import SiteHeader from './components/SiteHeader';
 import SocialLinks from './components/SocialLinks';
 import VisitorCount from './components/VisitorCount';
 import { getProject } from './data/projects';
+import { HOME_META, NOT_FOUND_META, PROJECTS_META, projectMeta, type PageMeta } from './data/seo';
 import { useVisitorCount } from './hooks/useVisitorCount';
 import { matchRoute, usePathname, useRouteEffects } from './router';
 
@@ -12,9 +13,6 @@ const WorkSection = lazy(() => import('./components/WorkSection'));
 const AboutSection = lazy(() => import('./components/AboutSection'));
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
 const ProjectPage = lazy(() => import('./pages/ProjectPage'));
-
-const SITE_TITLE = 'Ashish Prajapati | AI Engineer & Full-Stack Developer';
-const SITE_DESCRIPTION = 'Ashish Prajapati is an AI engineer, full-stack developer, and AI expert building production-ready web apps and AI-powered systems.';
 
 const SectionLoader = () => (
   <div className="reading-column py-12 text-sm text-ink-2" role="status">Loading…</div>
@@ -35,18 +33,11 @@ function App() {
   const visitors = useVisitorCount();
   const project = route.name === 'project' ? getProject(route.slug) : undefined;
 
-  let title = SITE_TITLE;
-  let description = SITE_DESCRIPTION;
-  if (route.name === 'projects') {
-    title = 'Projects | Ashish Prajapati';
-    description = 'AI agents, developer tools, and full-stack products built by Ashish Prajapati.';
-  } else if (project) {
-    title = `${project.name} | Ashish Prajapati`;
-    description = project.summary;
-  } else if (route.name === 'project' || route.name === 'not-found') {
-    title = 'Page not found | Ashish Prajapati';
-  }
-  useRouteEffects(pathname, title, description);
+  let meta: PageMeta = NOT_FOUND_META;
+  if (route.name === 'home') meta = HOME_META;
+  else if (route.name === 'projects') meta = PROJECTS_META;
+  else if (project) meta = projectMeta(project);
+  useRouteEffects(pathname, meta);
 
   let page;
   if (route.name === 'home') {
