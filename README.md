@@ -16,6 +16,12 @@ Personal portfolio for Ashish Prajapati, built with React, TypeScript, Vite, Tai
 - A live visitor note at the end of the home page (“Congratulations, you are the 486th visitor of this site”): a past baseline of 485 (`src/data/site.ts`) plus one for each new visitor recorded by `/api/visitors`. A visitor is counted once per day using a salted hash, so no IP address is stored.
 - Vercel-ready API route for `/api/spotify/now-playing`, and `vercel.json` rewrites so deep links such as `/projects/agentui` load.
 
+## SEO
+
+`npm run build` generates a static HTML file for the home page, `/projects`, and every project, each with its own title, description, canonical URL, Open Graph and Twitter tags, JSON-LD, and a crawlable no-JavaScript fallback (`scripts/seo-plugin.ts`). It also writes `sitemap.xml`, `robots.txt`, and `404.html` (served with a real 404 status). Page titles and descriptions live in `src/data/seo.ts`; add a project in `src/data/projects.ts` and its page, metadata, and sitemap entry follow automatically.
+
+The site URL comes from `SITE_URL`, then Vercel's production domain. To verify the site in Google Search Console, set `GOOGLE_SITE_VERIFICATION` to the token it gives you and redeploy.
+
 ## Tech Stack
 
 - React 18
