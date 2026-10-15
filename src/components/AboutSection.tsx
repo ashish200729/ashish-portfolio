@@ -1,118 +1,34 @@
 import { lazy, Suspense } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 
 const GitHubGraph = lazy(() => import('./GitHubGraph'));
 
 export default function AboutSection() {
   return (
     <>
-      <section id="hire" className="min-h-screen px-6 py-20">
-        <div className="max-w-4xl mx-auto">
+      <section id="hire" className="reading-column pt-12" aria-labelledby="about-title">
+        <h2 id="about-title" className="section-title">About me</h2>
+        <div className="flex items-start gap-4">
+          <img src="/image.jpg" alt="Ashish's avatar" width="64" height="64" className="size-16 shrink-0 rounded-xl object-cover" loading="lazy" />
           <div>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">About</p>
-            <h2 className="text-2xl font-bold">Me</h2>
+            <h3 className="text-sm font-medium">Ashish Prajapati</h3>
+            <p className="mt-2 text-sm leading-[1.85] text-ink-2">I'm an AI engineer, full-stack developer, and AI expert. I love building products to solve real-world problems, and I specialize in building MVPs and AI-powered applications.</p>
           </div>
-
-          <div className="mt-8 flex flex-col gap-4 md:flex-row mb-16">
-            <img
-              src="/image.jpg"
-              alt="About"
-              className="border-secondary size-60 rounded-md border-2 bg-blue-300 dark:bg-yellow-300 object-cover"
-              loading="lazy"
-              width="240"
-              height="240"
-            />
-            <div className="mt-4">
-              <h3 className="text-2xl font-bold">Ashish Prajapati</h3>
-              <p className="text-gray-500 dark:text-gray-400 mt-4">
-                I'm a Full Stack web developer and Ai Engineer, I love building products to solve real-world problems. I'm specialized in building MVP's.
-              </p>
-              <p className="text-gray-500 dark:text-gray-400 mt-8 font-bold">Skills</p>
-              <div className="flex flex-wrap gap-2">
-                {/* React */}
-                <div className="mt-4 size-6 hover:cursor-pointer" title="React">
-                  <svg viewBox="0 0 128 128"><g fill="#61DAFB"><circle cx="64" cy="64" r="11.4"></circle><path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13.2-.2-22.5-6.6-26.1-1.9-1.1-4-1.6-6.4-1.6-7 0-15.9 5.2-24.9 13.9-9-8.7-17.9-13.9-24.9-13.9-2.4 0-4.5.5-6.4 1.6-6.4 3.7-8.7 13-6.6 26.1.4 2.3.9 4.7 1.5 7.1-2.4.7-4.7 1.4-6.9 2.3C8.2 50 1.4 56.6 1.4 64s6.9 14 19.3 18.8c2.2.8 4.5 1.6 6.9 2.3-.6 2.4-1.1 4.8-1.5 7.1-2.1 13.2.2 22.5 6.6 26.1 1.9 1.1 4 1.6 6.4 1.6 7.1 0 16-5.2 24.9-13.9 9 8.7 17.9 13.9 24.9 13.9 2.4 0 4.5-.5 6.4-1.6 6.4-3.7 8.7-13 6.6-26.1-.4-2.3-.9-4.7-1.5-7.1 2.4-.7 4.7-1.4 6.9-2.3 12.5-4.8 19.3-11.4 19.3-18.8s-6.8-14-19.3-18.8zM92.5 14.7c4.1 2.4 5.5 9.8 3.8 20.3-.3 2.1-.8 4.3-1.4 6.6-5.2-1.2-10.7-2-16.5-2.5-3.4-4.8-6.9-9.1-10.4-13 7.4-7.3 14.9-12.3 21-12.3 1.3 0 2.5.3 3.5.9zM81.3 74c-1.8 3.2-3.9 6.4-6.1 9.6-3.7.3-7.4.4-11.2.4-3.9 0-7.6-.1-11.2-.4-2.2-3.2-4.2-6.4-6-9.6-1.9-3.3-3.7-6.7-5.3-10 1.6-3.3 3.4-6.7 5.3-10 1.8-3.2 3.9-6.4 6.1-9.6 3.7-.3 7.4-.4 11.2-.4 3.9 0 7.6.1 11.2.4 2.2 3.2 4.2 6.4 6 9.6 1.9 3.3 3.7 6.7 5.3 10-1.7 3.3-3.4 6.6-5.3 10zm8.3-3.3c1.5 3.5 2.7 6.9 3.8 10.3-3.4.8-7 1.4-10.8 1.9 1.2-1.9 2.5-3.9 3.6-6 1.2-2.1 2.3-4.2 3.4-6.2zM64 97.8c-2.4-2.6-4.7-5.4-6.9-8.3 2.3.1 4.6.2 6.9.2 2.3 0 4.6-.1 6.9-.2-2.2 2.9-4.5 5.7-6.9 8.3zm-18.6-15c-3.8-.5-7.4-1.1-10.8-1.9 1.1-3.3 2.3-6.8 3.8-10.3 1.1 2 2.2 4.1 3.4 6.1 1.2 2.2 2.4 4.1 3.6 6.1zm-7-25.5c-1.5-3.5-2.7-6.9-3.8-10.3 3.4-.8 7-1.4 10.8-1.9-1.2 1.9-2.5 3.9-3.6 6-1.2 2.1-2.3 4.2-3.4 6.2zM64 30.2c2.4 2.6 4.7 5.4 6.9 8.3-2.3-.1-4.6-.2-6.9-.2-2.3 0-4.6.1-6.9.2 2.2-2.9 4.5-5.7 6.9-8.3zm22.2 21l-3.6-6c3.8.5 7.4 1.1 10.8 1.9-1.1 3.3-2.3 6.8-3.8 10.3-1.1-2.1-2.2-4.2-3.4-6.2zM31.7 35c-1.7-10.5-.3-17.9 3.8-20.3 1-.6 2.2-.9 3.5-.9 6 0 13.5 4.9 21 12.3-3.5 3.8-7 8.2-10.4 13-5.8.5-11.3 1.4-16.5 2.5-.6-2.3-1-4.5-1.4-6.6zM7 64c0-4.7 5.7-9.7 15.7-13.4 2-.8 4.2-1.5 6.4-2.1 1.6 5 3.6 10.3 6 15.6-2.4 5.3-4.5 10.5-6 15.5C15.3 75.6 7 69.6 7 64zm28.5 49.3c-4.1-2.4-5.5-9.8-3.8-20.3.3-2.1.8-4.3 1.4-6.6 5.2 1.2 10.7 2 16.5 2.5 3.4 4.8 6.9 9.1 10.4 13-7.4 7.3-14.9 12.3-21 12.3-1.3 0-2.5-.3-3.5-.9zM96.3 93c1.7 10.5.3 17.9-3.8 20.3-1 .6-2.2.9-3.5.9-6 0-13.5-4.9-21-12.3 3.5-3.8 7-8.2 10.4-13 5.8-.5 11.3-1.4 16.5-2.5.6 2.3 1 4.5 1.4 6.6zm9-15.6c-2 .8-4.2 1.5-6.4 2.1-1.6-5-3.6-10.3-6-15.6 2.4-5.3 4.5-10.5 6-15.5 13.8 4 22.1 10 22.1 15.6 0 4.7-5.8 9.7-15.7 13.4z"></path></g></svg>
-                </div>
-                {/* Go */}
-                <div className="mt-4 size-6 hover:cursor-pointer" title="Go">
-                  <svg viewBox="0 0 128 128"><path fill="#00acd7" d="M18.8 58.3c-.4.2-.8.3-1.1.4h-.2c-.2 0-.3-.1-.2-.3 0-.1.2-.2.4-.3.4-.2.8-.3 1.1-.4h.2c.2 0 .3.1.2.3 0 .1-.2.2-.4.3zM25.4 56.5c-.5.2-1.1.5-1.5.7-.1 0-.2 0-.2-.1 0-.1.1-.3.4-.4.5-.2 1.1-.5 1.5-.7.1 0 .2 0 .2.1 0 .1-.1.3-.4.4zm-9.5 2.4c-.5.2-.9.4-1.3.5-.1 0-.2 0-.2-.1 0-.1.1-.3.3-.4.5-.2.9-.4 1.3-.5.1 0 .2 0 .2.1.1.1 0 .3-.3.4zm47.2 4.6c0 .2-1.8.8-4.9 1.2-2.7.4-6.1.6-9.4.5-3.3-.1-6.2-.4-8.3-.9-2.4-.5-3.6-1.1-3.6-1.3 0-.1 1.5-.3 4.1-.4 2.7-.1 6.6-.1 10.5.2s7.2.7 9.4 1.1c2.4.4 2.3.5 2.2.6zM88.1 64.5c-.6-.1-1.3-.1-2.1-.2h-.5c-.2 0-.3-.2-.2-.3 0-.1.3-.2.6-.2.6.1 1.3.1 2.1.2h.5c.2 0 .3.2.2.3.1.1-.2.2-.6.2z"></path><path fill="#00acd7" d="M60.1 70.6c-6.2-.3-11.3-1.3-13.8-2.4-1.3-.6-1.9-1.2-1.9-1.7 0-1.3 5.5-2.4 13.8-2.8 8-.4 15.2.1 19.4 1.3 1.9.6 3 1.3 2.9 2.1-.1 1.3-5.7 2.4-14.1 2.9-2.1.2-4.2.4-6.3.6zm1.7-6.4c-7.5.3-13.9 1.4-16.3 2.6 2.7 1.1 8.8 2 16 2.3 7.8.3 15-.4 18-1.7-2.5-1.2-9.4-2.3-17.7-3.2zm57.5 3.2c-.1 0-.2 0-.2-.1s.1-.2.3-.4c.5-.2 1.2-.5 2-.7 0 0 .1 0 .1.1s0 .2-.2.4c-.6.2-1.3.5-2 .7zm-3.7 1.5c-.1 0-.2 0-.3-.1 0-.1 0-.2.1-.3.5-.3 1-.6 1.7-.9.1 0 .2 0 .3.1 0 .1 0 .2-.1.3-.6.3-1.1.6-1.7.9zm-3.3 1.6c-.1 0-.3-.1-.3-.2 0-.1 0-.2.2-.4.4-.3.9-.6 1.4-.9.1 0 .3.1.3.2 0 .1 0 .2-.2.4-.5.3-.9.6-1.4.9z"></path><path fill="#00acd7" d="M115.6 64.8c-.7 1-3.1 1.7-6.7 2.1-4 .5-9.2.5-14.5.1s-10-.9-13.5-1.7c-3-.7-4.6-1.5-4.5-2.3.1-.9 2.1-1.6 5.3-2.1 3.5-.5 8.4-.8 13.5-.7s9.7.4 13.3 1c3.1.5 5 1.2 5.1 1.9 0 .2 0 .4-.1.7 1 .2 1.8.5 2.1 1zm-33.8-3.7c-3.8.1-7.4.4-10.5.8-4.1.5-6.4 1.4-6.5 2.1 0 .3.5.7 1.4 1.1 1.4.6 3.5 1.1 6 1.5 3.3.5 7.5.9 11.9 1 4.4.1 8.5 0 11.8-.4 2.5-.3 4.6-.7 6-1.2 1-.4 1.6-.8 1.7-1.3.1-.7-2-1.4-5.7-1.9-3.1-.5-7.3-.8-11.6-.9-1.6 0-3.1 0-4.5.2z"></path></svg>
-                </div>
-                {/* JavaScript */}
-                <div className="mt-4 size-6 hover:cursor-pointer" title="JavaScript">
-                  <svg viewBox="0 0 128 128"><path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z"></path><path fill="#323330" d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.753l-.048 30.272c0 6.438.333 12.34-.714 14.149-1.713 3.558-6.152 3.117-8.175 2.427-2.059-1.012-3.106-2.451-4.319-4.485-.333-.584-.583-1.036-.667-1.071l-9.52 5.83c1.583 3.249 3.915 6.069 6.902 7.901 4.462 2.678 10.459 3.499 16.731 2.059 4.082-1.189 7.604-3.652 9.448-7.401 2.666-4.915 2.094-10.864 2.07-17.444.06-10.735.001-21.468.001-32.237z"></path></svg>
-                </div>
-                {/* TypeScript */}
-                <div className="mt-4 size-6 hover:cursor-pointer" title="TypeScript">
-                  <svg viewBox="0 0 128 128"><path fill="#fff" d="M22.67 47h99.67v73.67H22.67z"></path><path fill="#007acc" d="M1.5 63.91v62.5h125v-125H1.5zm100.73-5a15.56 15.56 0 017.82 4.5 20.58 20.58 0 013 4c0 .16-5.4 3.81-8.69 5.85-.12.08-.6-.44-1.13-1.23a7.09 7.09 0 00-5.87-3.53c-3.79-.26-6.23 1.73-6.21 5a4.58 4.58 0 00.54 2.34c.83 1.73 2.38 2.76 7.24 4.86 8.95 3.85 12.78 6.39 15.16 10 2.66 4 3.25 10.46 1.45 15.24-2 5.2-6.9 8.73-13.83 9.9a38.32 38.32 0 01-9.52-.1 23 23 0 01-12.72-6.63c-1.15-1.27-3.39-4.58-3.25-4.82a9.34 9.34 0 011.15-.73L82 101l3.59-2.08.75 1.11a16.78 16.78 0 004.74 4.54c4 2.1 9.46 1.81 12.16-.62a5.43 5.43 0 00.69-6.92c-1-1.39-3-2.56-8.59-5-6.45-2.78-9.23-4.5-11.77-7.24a16.48 16.48 0 01-3.43-6.25 25 25 0 01-.22-8c1.33-6.23 6-10.58 12.82-11.87a31.66 31.66 0 019.49.26zm-29.34 5.24v5.12H56.66v46.23H45.15V69.26H28.88v-5a49.19 49.19 0 01.12-5.17C29.08 59 39 59 51 59h21.83z"></path></svg>
-                </div>
-                {/* Node.js */}
-                <div className="mt-4 size-6 hover:cursor-pointer" title="Node.js">
-                  <svg viewBox="0 0 128 128"><path fill="#83CD29" d="M112.771 30.334L68.674 4.729c-2.781-1.584-6.402-1.584-9.205 0L14.901 30.334C12.031 31.985 10 35.088 10 38.407v51.142c0 3.319 2.084 6.423 4.954 8.083l11.775 6.688c5.628 2.772 7.617 2.772 10.178 2.772 8.333 0 13.093-5.039 13.093-13.828v-50.49c0-.713-.371-1.774-1.071-1.774h-5.623C42.594 41 41 42.061 41 42.773v50.49c0 3.896-3.524 7.773-10.11 4.48L18.723 90.73c-.424-.23-.723-.693-.723-1.181V38.407c0-.482.555-.966.982-1.213l44.424-25.561c.415-.235 1.025-.235 1.439 0l43.882 25.555c.42.253.272.722.272 1.219v51.142c0 .488.183.963-.232 1.198l-44.086 25.576c-.378.227-.847.227-1.261 0l-11.307-6.749c-.341-.198-.746-.269-1.073-.086-3.146 1.783-3.726 2.02-6.677 3.043-.726.253-1.797.692.41 1.929l14.798 8.754a9.294 9.294 0 004.647 1.246c1.642 0 3.25-.426 4.667-1.246l43.885-25.582c2.87-1.672 4.23-4.764 4.23-8.083V38.407c0-3.319-1.36-6.414-4.229-8.073zM77.91 81.445c-11.726 0-14.309-3.235-15.17-9.066-.1-.628-.633-1.379-1.272-1.379h-5.731c-.709 0-1.279.86-1.279 1.566 0 7.466 4.059 16.512 23.453 16.512 14.039 0 22.088-5.455 22.088-15.109 0-9.572-6.467-12.084-20.082-13.886-13.762-1.819-15.16-2.738-15.16-5.962 0-2.658 1.184-6.203 11.374-6.203 9.105 0 12.461 1.954 13.842 8.091.118.577.645.991 1.24.991h5.754c.354 0 .692-.143.94-.396.24-.272.367-.613.335-.979-.891-10.568-7.912-15.493-22.112-15.493-12.631 0-20.166 5.334-20.166 14.275 0 9.698 7.497 12.378 19.622 13.577 14.505 1.422 15.633 3.542 15.633 6.395 0 4.955-3.978 7.066-13.309 7.066z"></path></svg>
-                </div>
-                {/* Next.js */}
-                <div className="mt-4 size-6 hover:cursor-pointer" title="Next.js">
-                  <svg viewBox="0 0 128 128"><circle cx="64" cy="64" r="64"></circle><path fill="url(#a)" d="M106.317 112.014 49.167 38.4H38.4v51.179h8.614v-40.24l52.54 67.884a64.216 64.216 0 0 0 6.763-5.209z"></path><path fill="url(#b)" d="M81.778 38.4h8.533v51.2h-8.533z"></path><defs><linearGradient id="a" x1="109" x2="144.5" y1="116.5" y2="160.5" gradientTransform="scale(.71111)" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient><linearGradient id="b" x1="121" x2="120.799" y1="54" y2="106.875" gradientTransform="scale(.71111)" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient></defs></svg>
-                </div>
-                {/* PostgreSQL */}
-                <div className="mt-4 size-6 hover:cursor-pointer" title="PostgreSQL">
-                  <svg viewBox="0 0 128 128"><path fill="#336791" d="M115.731 77.44c-13.925 2.873-14.882-1.842-14.882-1.842 14.703-21.816 20.849-49.51 15.545-56.287C101.924.823 76.875 9.566 76.457 9.793l-.135.024c-2.751-.571-5.83-.911-9.291-.967-6.301-.103-11.08 1.652-14.707 4.402 0 0-44.684-18.408-42.606 23.151.442 8.842 12.672 66.899 27.26 49.363 5.332-6.412 10.483-11.834 10.483-11.834 2.559 1.699 5.622 2.567 8.833 2.255l.25-.212c-.078.796-.042 1.575.1 2.497-3.758 4.199-2.654 4.936-10.167 6.482-7.602 1.566-3.136 4.355-.22 5.084 3.534.884 11.712 2.136 17.237-5.598l-.221.882c1.473 1.18 2.507 7.672 2.334 13.557-.174 5.885-.29 9.926.871 13.082 1.16 3.156 2.316 10.256 12.192 8.14 8.252-1.768 12.528-6.351 13.124-13.995.422-5.435 1.377-4.631 1.438-9.49l.767-2.3c.884-7.367.14-9.743 5.225-8.638l1.235.108c3.742.17 8.639-.602 11.514-1.938 6.19-2.871 9.861-7.667 3.758-6.408z"></path><path fill="#fff" d="M75.957 122.307c-8.232 0-10.84-6.519-11.907-9.185-1.562-3.907-1.899-19.069-1.551-31.503a1.59 1.59 0 011.64-1.55 1.594 1.594 0 011.55 1.639c-.401 14.341.168 27.337 1.324 30.229 1.804 4.509 4.54 8.453 12.275 6.796 7.343-1.575 10.093-4.359 11.318-11.46.94-5.449 2.799-20.951 3.028-24.01a1.593 1.593 0 011.71-1.472 1.597 1.597 0 011.472 1.71c-.239 3.185-2.089 18.657-3.065 24.315-1.446 8.387-5.185 12.191-13.794 14.037-1.463.313-2.792.453-4 .454z"></path></svg>
-                </div>
-                {/* Supabase */}
-                <div className="mt-4 size-6 hover:cursor-pointer" title="Supabase">
-                  <svg viewBox="0 0 128 128"><path fill="#2d3748" d="M66.457.014a6.308 6.308 0 0 0-5.812 3.028l-47.87 78.072a6.379 6.379 0 0 0 .048 6.748l23.568 37.186a6.387 6.387 0 0 0 7.22 2.683l68.012-20.407a6.37 6.37 0 0 0 3.96-8.765l-43.72-94.85A6.298 6.298 0 0 0 66.46.014Zm1.795 23.95a2.348 2.348 0 0 1 2.448 1.433l30.16 69.784a2.39 2.39 0 0 1-1.512 3.241l-46.996 14.024a2.39 2.39 0 0 1-3.024-2.76l16.83-83.812a2.353 2.353 0 0 1 2.099-1.91z"></path></svg>
-                </div>
-                {/* Python */}
-                <div className="mt-4 size-6 hover:cursor-pointer" title="Python">
-                  <svg viewBox="0 0 128 128"><linearGradient id="python-original-a" x1="70.252" x2="170.659" y1="1237.476" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#5A9FD4" /><stop offset="1" stopColor="#306998" /></linearGradient><linearGradient id="python-original-b" x1="209.474" x2="173.62" y1="1098.811" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#FFD43B" /><stop offset="1" stopColor="#FFE873" /></linearGradient><path fill="url(#python-original-a)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z" /><path fill="url(#python-original-b)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z" /></svg>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Suspense fallback={
-            <div className="border border-gray-200 dark:border-gray-800 rounded-2xl bg-gray-50 dark:bg-gradient-to-br dark:from-[#0c0d10] dark:via-[#0c1117] dark:to-[#0b0c12] p-10 shadow-2xl">
-              <div className="flex items-center justify-center h-64">
-                <div className="animate-pulse text-gray-500 dark:text-gray-400">Loading GitHub activity...</div>
-              </div>
-            </div>
-          }>
-            <GitHubGraph />
-          </Suspense>
+        </div>
+        <div className="pt-10">
+          <h2 className="section-title">Tools I reach for</h2>
+          <p className="text-sm leading-[1.85] text-ink-2">React · Go · JavaScript · TypeScript · Next.js · Rust · NestJS · PostgreSQL · Supabase · Python</p>
+        </div>
+        <div className="pt-10">
+          <Suspense fallback={<p className="py-8 text-sm text-ink-2" role="status">Loading GitHub activity…</p>}><GitHubGraph /></Suspense>
         </div>
       </section>
-
-      <section className="min-h-[40vh] px-6 py-24 flex items-center justify-center">
-        <div className="text-center max-w-2xl mx-auto space-y-8">
-          <div className="space-y-4">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-              Hey, you scrolled this far.
-            </h3>
-            <p className="text-xl text-gray-500 dark:text-gray-400 font-medium">
-              Let's create something amazing together.
-            </p>
-          </div>
-
-          <a
-            href="https://wa.me/7623075589"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-100 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg mx-auto text-lg font-bold group"
-          >
-            <img
-              src="/image.jpg"
-              alt="Ashish Prajapati"
-              className="w-8 h-8 rounded-full object-cover ring-2 ring-white/20"
-              loading="lazy"
-            />
-            <span>Book a call</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-            >
-              <path fillRule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clipRule="evenodd" />
-            </svg>
-          </a>
+      <section className="reading-column pt-12 sm:pt-14" aria-labelledby="contact-title">
+        <h2 id="contact-title" className="text-lg font-medium tracking-[-0.02em]">Hey, you scrolled this far.</h2>
+        <p className="mt-3 text-sm leading-6 text-ink-2">Let's create something amazing together.</p>
+        <div className="mt-4 flex flex-wrap items-center gap-5">
+          <a href="https://wa.me/7623075589" target="_blank" rel="noopener noreferrer" className="text-link inline-flex min-h-10 items-center gap-1.5 text-sm">Book a call<ArrowUpRight size={14} /></a>
+          <a href="mailto:ashishp.292007@gmail.com" className="text-link inline-flex min-h-10 items-center text-sm">Say hello</a>
         </div>
       </section>
     </>

@@ -5,9 +5,19 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Geist', 'system-ui', 'sans-serif'],
+        handwriting: ['Caveat', 'cursive'],
       },
       colors: {
+        canvas: 'rgb(var(--canvas) / <alpha-value>)',
+        'canvas-raised': 'rgb(var(--canvas-raised) / <alpha-value>)',
+        edge: 'rgb(var(--edge) / <alpha-value>)',
+        'edge-subtle': 'rgb(var(--edge-subtle) / <alpha-value>)',
+        ink: 'rgb(var(--ink) / <alpha-value>)',
+        'ink-2': 'rgb(var(--ink-2) / <alpha-value>)',
+        'ink-3': 'rgb(var(--ink-3) / <alpha-value>)',
+        accent: 'rgb(var(--accent) / <alpha-value>)',
+        'accent-bg': 'rgb(var(--accent-bg) / <alpha-value>)',
         'muted-foreground': '#6b7280',
         'primary': '#ffffff',
         'secondary': '#9ca3af',
