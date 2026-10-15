@@ -1,6 +1,7 @@
 // oneko.js - A cat that follows your cursor (with drag & drop!)
 // Optimized for smooth 60 FPS animation
 (function () {
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   const nekoEl = document.createElement("div");
   let nekoPosX = 32;
   let nekoPosY = 32;
@@ -179,7 +180,7 @@
         }
 
         // If thrown with enough velocity, apply physics
-        if (Math.abs(velocityX) > 2 || Math.abs(velocityY) > 2) {
+        if (!motionPreference.matches && (Math.abs(velocityX) > 2 || Math.abs(velocityY) > 2)) {
           isThrown = true;
           applyThrowPhysics();
         }
@@ -191,8 +192,10 @@
     animationLoop();
   }
 
-  function animationLoop(currentTime) {
+  function animationLoop(currentTime = performance.now()) {
+    if (motionPreference.matches) { setSprite('idle', 0); return; }
     animationId = requestAnimationFrame(animationLoop);
+    if (document.hidden) return;
 
     // Only update sprite animation at the desired frame rate
     if (currentTime - lastFrameTime >= frameInterval) {
@@ -394,4 +397,10 @@
   }
 
   create();
+  motionPreference.addEventListener('change', () => {
+    if (animationId !== null) cancelAnimationFrame(animationId);
+    isThrown = false;
+    lastFrameTime = performance.now();
+    animationLoop();
+  });
 })();

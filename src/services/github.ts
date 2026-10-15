@@ -14,6 +14,7 @@ interface GitHubStats {
   following: number;
   publicRepos: number;
   totalStars: number;
+  contributionSource: 'contributions' | 'events' | 'unavailable';
 }
 
 interface GitHubUserResponse {
@@ -39,23 +40,23 @@ interface GitHubEventResponse {
 
 // Fetch user basic info
 export async function fetchGitHubUser(): Promise<GitHubUserResponse> {
-  const response = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}`);
+  const response = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}`, { signal: AbortSignal.timeout(10000) });
   if (!response.ok) throw new Error('Failed to fetch GitHub user');
   return response.json();
 }
 
 // Fetch user repositories
 export async function fetchGitHubRepos(): Promise<GitHubRepoResponse[]> {
-  const response = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
+  const response = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`, { signal: AbortSignal.timeout(10000) });
   if (!response.ok) throw new Error('Failed to fetch GitHub repos');
   return response.json();
 }
 
 // Fetch contribution data from GitHub scraping service (ghchart alternative)
-export async function fetchGitHubContributions(): Promise<GitHubContribution[]> {
+export async function fetchGitHubContributions(): Promise<{ contributions: GitHubContribution[]; source: GitHubStats['contributionSource'] }> {
   try {
     // Try to use GitHub's contribution API through a proxy service
-    const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`);
+    const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`, { signal: AbortSignal.timeout(10000) });
 
     if (!response.ok) {
       throw new Error('Failed to fetch contributions');
@@ -64,8 +65,11 @@ export async function fetchGitHubContributions(): Promise<GitHubContribution[]> 
     const data = await response.json() as GitHubContributionResponse;
     const contributions: GitHubContribution[] = [];
 
-    if (data.contributions) {
+    if (Array.isArray(data.contributions) && data.contributions.length > 0) {
       data.contributions.forEach((contribution) => {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(contribution.date) || !Number.isFinite(Date.parse(contribution.date)) || new Date(contribution.date).toISOString().slice(0, 10) !== contribution.date || !Number.isSafeInteger(contribution.count) || contribution.count < 0) {
+          throw new Error('Invalid contribution data');
+        }
         const count = contribution.count;
         const level =
           count === 0 ? 0 :
@@ -80,7 +84,8 @@ export async function fetchGitHubContributions(): Promise<GitHubContribution[]> 
         });
       });
 
-      return contributions;
+      contributions.sort((a, b) => a.date.localeCompare(b.date));
+      return { contributions, source: 'contributions' };
     }
 
     throw new Error('No contribution data found');
@@ -88,15 +93,16 @@ export async function fetchGitHubContributions(): Promise<GitHubContribution[]> 
     console.error('Error fetching GitHub contributions:', error);
     // Try to fetch events as backup to show at least some activity
     try {
-      const eventsResponse = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/events/public?per_page=100`);
+      const eventsResponse = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/events/public?per_page=100`, { signal: AbortSignal.timeout(10000) });
       if (eventsResponse.ok) {
         const events = await eventsResponse.json() as GitHubEventResponse[];
-        return generateContributionsFromEvents(events);
+        if (!Array.isArray(events)) throw new Error('Invalid event data');
+        return { contributions: generateContributionsFromEvents(events), source: 'events' };
       }
     } catch (eventsError) {
       console.error('Error fetching events:', eventsError);
     }
-    return generateEmptyContributions();
+    return { contributions: [], source: 'unavailable' };
   }
 }
 
@@ -107,7 +113,7 @@ function generateContributionsFromEvents(events: GitHubEventResponse[]): GitHubC
 
   // Count events per day
   events.forEach((event) => {
-    if (event.created_at) {
+    if (typeof event?.created_at === 'string') {
       const date = event.created_at.split('T')[0];
       contributionMap.set(date, (contributionMap.get(date) || 0) + 1);
     }
@@ -137,55 +143,26 @@ function generateContributionsFromEvents(events: GitHubEventResponse[]): GitHubC
   return contributions;
 }
 
-function generateEmptyContributions(): GitHubContribution[] {
-  const contributions: GitHubContribution[] = [];
-  const currentDate = new Date();
-
-  for (let i = 364; i >= 0; i--) {
-    const date = new Date(currentDate);
-    date.setDate(date.getDate() - i);
-
-    contributions.push({
-      date: date.toISOString().split('T')[0],
-      count: 0,
-      level: 0
-    });
-  }
-
-  return contributions;
-}
-
 // Fetch all GitHub stats
 export async function fetchGitHubStats(): Promise<GitHubStats> {
-  try {
-    const [user, repos, contributions] = await Promise.all([
-      fetchGitHubUser(),
-      fetchGitHubRepos(),
-      fetchGitHubContributions()
-    ]);
+  const [userResult, reposResult, contributionResult] = await Promise.allSettled([
+    fetchGitHubUser(),
+    fetchGitHubRepos(),
+    fetchGitHubContributions()
+  ]);
+  const user = userResult.status === 'fulfilled' && userResult.value ? userResult.value : {};
+  const repos = reposResult.status === 'fulfilled' && Array.isArray(reposResult.value) ? reposResult.value : [];
+  const { contributions, source } = contributionResult.status === 'fulfilled' ? contributionResult.value : { contributions: [], source: 'unavailable' as const };
+  const totalStars = repos.reduce((sum, repo) => sum + (repo?.stargazers_count || 0), 0);
+  const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
 
-    const totalStars = repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
-    const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
-
-    return {
-      totalContributions,
-      contributions,
-      followers: user.followers || 0,
-      following: user.following || 0,
-      publicRepos: user.public_repos || 0,
-      totalStars
-    };
-  } catch (error) {
-    console.error('Error fetching GitHub stats:', error);
-
-    const contributions = generateEmptyContributions();
-    return {
-      totalContributions: contributions.reduce((sum, day) => sum + day.count, 0),
-      contributions,
-      followers: 0,
-      following: 0,
-      publicRepos: 0,
-      totalStars: 0
-    };
-  }
+  return {
+    totalContributions,
+    contributions,
+    followers: user.followers || 0,
+    following: user.following || 0,
+    publicRepos: user.public_repos || 0,
+    totalStars,
+    contributionSource: source,
+  };
 }

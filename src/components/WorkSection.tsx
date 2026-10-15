@@ -1,212 +1,112 @@
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Github } from 'lucide-react';
-import { WORK_ITEMS, type WorkItem } from '../data/work';
+import { ArrowRight, ArrowUpRight, Lock } from 'lucide-react';
+import { FEATURED_PROJECTS, PROJECTS, type Project } from '../data/projects';
+import { EXPERIENCE, type ExperienceItem } from '../data/experience';
+import Link from './Link';
+import ProjectMark from './ProjectMark';
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-function WorkLogo({ item }: { item: WorkItem }) {
-  const cover = item.logoFit === 'cover';
-
+function FeaturedProject({ project }: { project: Project }) {
   return (
-    <img
-      src={item.logo}
-      alt={item.logoAlt ?? item.title}
-      className={`${cover ? 'size-full object-cover' : 'size-6 sm:size-7 object-contain'} ${item.logoClass ?? ''}`}
-      loading="lazy"
-    />
-  );
-}
-
-function WorkLinks({ links }: { links: WorkItem['links'] }) {
-  if (!links?.length) return null;
-
-  return (
-    <div className="flex flex-wrap gap-2 sm:gap-3">
-      {links.map((link) => (
-        <a
-          key={link.url}
-          href={link.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors duration-200"
-        >
-          {link.type === 'github' ? <Github className="size-4" /> : <ArrowUpRight className="size-4" />}
-          {link.label}
-        </a>
-      ))}
-    </div>
-  );
-}
-
-function WorkEntry({
-  item,
-  index,
-  isExpanded,
-  onToggle,
-}: {
-  item: WorkItem;
-  index: number;
-  isExpanded: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <motion.article
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.4, delay: index * 0.04, ease: EASE }}
-      className="border-b border-gray-200/80 dark:border-gray-800/80 last:border-b-0"
-    >
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={isExpanded}
-        className="group relative w-full text-left py-6 sm:py-7 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 dark:focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#0a0a0a] rounded-lg"
-      >
-        <div className="flex items-start justify-between gap-4 sm:gap-8">
-          <div className="flex items-start gap-3.5 sm:gap-4 min-w-0 flex-1">
-            <div className="shrink-0 size-10 sm:size-11 rounded-xl overflow-hidden flex items-center justify-center ring-1 ring-gray-200 dark:ring-gray-700 bg-gray-50 dark:bg-[#161616]">
-              <WorkLogo item={item} />
-            </div>
-
-            <div className="min-w-0 flex-1 pt-0.5">
-              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                <h3
-                  className={`text-lg sm:text-xl md:text-2xl font-bold tracking-tight transition-colors duration-200 ${
-                    isExpanded
-                      ? 'text-gray-900 dark:text-white'
-                      : 'text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200'
-                  }`}
-                >
-                  {item.title}
-                </h3>
-
-                {item.status === 'active' && (
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-green-600 dark:text-green-400">
-                    <span className="relative flex size-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full size-1.5 bg-green-500" />
-                    </span>
-                    Now
-                  </span>
-                )}
-              </div>
-
-              <p className="mt-0.5 text-sm sm:text-base text-gray-500 dark:text-gray-400 transition-colors duration-200 group-hover:text-gray-600 dark:group-hover:text-gray-300">
-                {item.subtitle}
-              </p>
-
-              {(item.period || item.location) && (
-                <p className="mt-1 text-xs sm:text-sm text-gray-400 dark:text-gray-500">
-                  {[item.period, item.location].filter(Boolean).join(', ')}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0 pt-1">
-            <span className="text-sm font-medium text-gray-400 dark:text-gray-500 tabular-nums transition-colors duration-200 group-hover:text-gray-500 dark:group-hover:text-gray-400">
-              {item.year}
-            </span>
-            <span
-              className={`text-lg leading-none select-none transition-all duration-200 ${
-                isExpanded
-                  ? 'rotate-45 text-gray-500 dark:text-gray-400'
-                  : 'rotate-0 text-gray-300 dark:text-gray-600 group-hover:text-gray-400 dark:group-hover:text-gray-500'
-              }`}
-              aria-hidden
-            >
-              +
-            </span>
-          </div>
+    <article className="flex min-w-0 flex-col">
+      <Link to={`/projects/${project.slug}`} className="group block rounded-2xl" aria-label={`${project.name} — ${project.summary}`}>
+        <div className="flex aspect-[1.7] items-center justify-center rounded-2xl bg-canvas-raised text-ink transition-colors duration-200 group-hover:bg-accent-bg">
+          <ProjectMark project={project} size={72} className="transition-transform duration-300 motion-safe:group-hover:-translate-y-1" />
         </div>
-      </button>
+        <div className="mt-4 flex items-start justify-between gap-3">
+          <h3 className="text-sm font-medium leading-6 tracking-[-0.015em] transition-colors group-hover:text-accent">{project.name}</h3>
+          <ArrowRight size={14} aria-hidden="true" className="mt-1 shrink-0 text-ink-3 transition-colors group-hover:text-accent" />
+        </div>
+      </Link>
+    </article>
+  );
+}
 
-      <AnimatePresence initial={false}>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: EASE }}
-            className="overflow-hidden"
-          >
-            <div className="pb-8 sm:pb-9 pl-[3.25rem] sm:pl-[3.75rem]">
-              <div className="space-y-4">
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {item.description}
-                </p>
+function ExperienceRow({ item }: { item: ExperienceItem }) {
+  const details = [item.role, item.period, item.location].filter(Boolean).join(' · ');
+  const period = item.period.replace(/ - /g, ' – ');
+  const rowClass = 'group grid min-h-11 w-full grid-cols-[24px_minmax(0,1fr)] items-center gap-x-3 rounded-md py-2 text-left';
 
-                {item.highlights && item.highlights.length > 0 && (
-                  <ul className="space-y-2">
-                    {item.highlights.map((point) => (
-                      <li
-                        key={point}
-                        className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:size-1 before:rounded-full before:bg-gray-300 dark:before:bg-gray-600"
-                      >
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+  const body = (
+    <>
+      {item.confidential ? (
+        <span className="size-6 overflow-hidden rounded-md bg-white" aria-hidden="true">
+          <img src={item.logo} alt="" width="24" height="24" className="size-full scale-110 blur-[3px]" loading="lazy" />
+        </span>
+      ) : (
+        <img src={item.logo} alt="" width="24" height="24" className={`size-6 rounded-md bg-white object-contain ${item.logoClass ?? ''}`} loading="lazy" />
+      )}
+      <div className="flex min-w-0 flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-0.5">
+          {item.confidential ? (
+            <h3 className="text-sm font-medium leading-6">
+              <span aria-hidden="true" className="select-none blur-[5px]">{item.company}</span>
+              <span className="sr-only">Company name withheld</span>
+            </h3>
+          ) : (
+            <h3 className="text-sm font-medium leading-6 transition-colors group-hover:text-accent">{item.company}</h3>
+          )}
+          <p className="text-sm leading-6 text-ink-2">{item.role}</p>
+        </div>
+        <div className="flex shrink-0 items-center gap-2 text-xs leading-5 text-ink-3">
+          <span className="whitespace-nowrap tabular-nums">{period}</span>
+          {item.confidential
+            ? <Lock size={12} aria-hidden="true" />
+            : item.to
+              ? <ArrowRight size={12} aria-hidden="true" className="transition-colors group-hover:text-accent" />
+              : <ArrowUpRight size={12} aria-hidden="true" className="transition-colors group-hover:text-accent" />}
+        </div>
+      </div>
+    </>
+  );
 
-                <div className="flex flex-wrap gap-2">
-                  {item.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2.5 py-1 text-[11px] font-medium text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-800 rounded-md"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+  if (item.confidential) {
+    return (
+      <li>
+        <div className={rowClass} title={`Company and product names withheld · ${details}`}>
+          {body}
+          <span className="sr-only">{details}. Company and product names are withheld.</span>
+        </div>
+      </li>
+    );
+  }
 
-                <WorkLinks links={item.links} />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.article>
+  if (item.to) {
+    return (
+      <li>
+        <Link to={item.to} className={rowClass} aria-label={`${item.company} — ${details}. View project`} title={details}>
+          {body}
+        </Link>
+      </li>
+    );
+  }
+
+  return (
+    <li>
+      <a href={item.website} target="_blank" rel="noopener noreferrer" className={rowClass} aria-label={`${item.company} — ${details}. Visit company website, opens in a new tab`} title={details}>
+        {body}
+      </a>
+    </li>
   );
 }
 
 export default function WorkSection() {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-
   return (
-    <section id="work" className="min-h-screen px-4 sm:px-6 py-20 sm:py-32 bg-white dark:bg-[#0a0a0a]">
-      <div className="max-w-3xl mx-auto">
-        <motion.header
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: EASE }}
-          className="mb-10 sm:mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Work
-          </h2>
-          <p className="mt-3 text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-lg leading-relaxed">
-            Products, companies, and systems I've built, from founding AI infrastructure to
-            shipping full-stack applications.
-          </p>
-        </motion.header>
-
-        <div>
-          {WORK_ITEMS.map((item, index) => (
-            <WorkEntry
-              key={item.id}
-              item={item}
-              index={index}
-              isExpanded={expandedId === item.id}
-              onToggle={() =>
-                setExpandedId((current) => (current === item.id ? null : item.id))
-              }
-            />
-          ))}
+    <section id="work" aria-label="Work" className="pt-10 sm:pt-12">
+      <div className="showcase-column">
+        <div className="mb-6 flex items-baseline justify-between gap-4">
+          <h2 className="font-handwriting text-[38px] leading-none tracking-[-0.02em]">Highlights</h2>
+          <Link to="/projects" className="text-link inline-flex min-h-10 items-center gap-1.5 text-xs">
+            All {PROJECTS.length} projects<ArrowRight size={13} aria-hidden="true" />
+          </Link>
         </div>
+        <div className="grid items-stretch gap-x-6 gap-y-9 sm:grid-cols-3">
+          {FEATURED_PROJECTS.map(project => <FeaturedProject key={project.slug} project={project} />)}
+        </div>
+      </div>
+      <div className="reading-column pt-12 sm:pt-14">
+        <h2 id="experience-title" className="mb-3 text-xs font-medium text-ink-2">Experience</h2>
+        <ul className="space-y-1" aria-labelledby="experience-title">
+          {EXPERIENCE.map(item => <ExperienceRow key={item.id} item={item} />)}
+        </ul>
       </div>
     </section>
   );

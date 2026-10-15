@@ -1,16 +1,88 @@
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Caveat';
+  src: url('/fonts/caveat-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  :root {
+    color-scheme: light;
+    --canvas: 255 255 255;
+    --canvas-raised: 243 243 243;
+    --edge: 222 222 214;
+    --edge-subtle: 234 233 227;
+    --ink: 41 43 40;
+    --ink-2: 98 101 94;
+    --ink-3: 114 118 108;
+    --accent: 72 99 75;
+    --accent-bg: 237 240 233;
+    --highlight: 248 185 157;
+    --highlight-ink: 53 37 30;
   }
+
+  .dark {
+    color-scheme: dark;
+    --canvas: 21 22 20;
+    --canvas-raised: 38 38 38;
+    --edge: 54 58 49;
+    --edge-subtle: 41 45 37;
+    --ink: 238 239 233;
+    --ink-2: 180 184 172;
+    --ink-3: 155 161 143;
+    --accent: 191 206 169;
+    --accent-bg: 41 49 36;
+    --highlight: 113 70 50;
+    --highlight-ink: 255 240 230;
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  body {
+    margin: 0;
+    background: rgb(var(--canvas));
+    color: rgb(var(--ink));
+    font-family: 'Geist', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgb(var(--highlight)); color: rgb(var(--highlight-ink)); }
+  :focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 4px; }
+  #main:focus { outline: none; }
+  mark { background: rgb(var(--highlight)); color: rgb(var(--highlight-ink)); border-radius: 4px; padding: 2px 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  button, a, summary { -webkit-tap-highlight-color: transparent; }
+  button { touch-action: manipulation; }
+  * { scrollbar-width: thin; scrollbar-color: rgb(var(--edge)) rgb(var(--canvas)); }
 }
 
-@layer utilities {
-  .skill-inner-shadow {
-    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-  }
+@layer components {
+  .reading-column { @apply mx-auto w-full max-w-[624px] px-6 sm:px-8; }
+  .showcase-column { @apply mx-auto w-full max-w-[1064px] px-6 sm:px-8; }
+  .section-title { @apply mb-5 text-xs font-medium text-ink-2; }
+  .text-link { @apply text-ink underline decoration-edge underline-offset-4 transition-colors hover:decoration-ink; }
+  .icon-button { @apply inline-flex size-9 shrink-0 items-center justify-center rounded-full text-ink-2 transition-colors hover:bg-canvas-raised hover:text-ink disabled:cursor-default disabled:opacity-40; }
+  .skip-link { @apply fixed left-4 top-4 z-50 -translate-y-24 rounded-lg bg-canvas px-4 py-3 text-sm text-ink shadow-md focus:translate-y-0; }
+  .github-calendar .react-activity-calendar__scroll-container { overflow: visible !important; }
+  .github-calendar .react-activity-calendar__scroll-container > svg { width: 100%; height: auto; display: block; }
+}
+
+@media (max-width: 380px) {
+  header nav { gap: 0; }
+  header .icon-button { width: 30px; height: 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
