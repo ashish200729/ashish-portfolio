@@ -148,6 +148,26 @@ export const PROJECTS: Project[] = [
     },
   },
   {
+    slug: 'hitherto',
+    name: 'Hitherto',
+    summary: 'Temporal memory for coding agents that notices when code stops agreeing with it.',
+    role: 'Research & engineering',
+    period: 'Oct 2026',
+    year: '2026',
+    status: 'Research',
+    mark: 'hitherto',
+    overview:
+      'A self-hostable memory engine that records when each fact was true and when it was known, anchors facts to code, and recalls them through cited, budgeted hybrid search in PostgreSQL.',
+    highlights: [
+      'Bi-temporal facts that rebuild history when evidence arrives late.',
+      'Code anchors and branch lanes that notice renamed or deleted symbols.',
+      'Idempotent capture, fenced workers, and forced row-level security.',
+    ],
+    stack: ['TypeScript', 'Effect', 'Hono', 'PostgreSQL', 'pgvector'],
+    links: [],
+    researchSlug: 'hitherto-temporal-memory',
+  },
+  {
     slug: 'expressive-pocket-tts',
     name: 'Expressive Pocket TTS',
     summary: 'Fine-tuning a compact speech model for happy and sad delivery.',

@@ -1,0 +1,259 @@
+{
+  "benchmark": "LoCoMo (locomo10)",
+  "paper": "https://arxiv.org/abs/2402.17753",
+  "dataset": {
+    "url": "https://raw.githubusercontent.com/snap-research/locomo/main/data/locomo10.json",
+    "sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+    "license": "CC BY-NC 4.0",
+    "bytes": 2805274
+  },
+  "generatedAt": "2026-10-28T09:20:33.116Z",
+  "method": {
+    "granularity": "one memory per dialogue turn: speaker, text and shared image caption",
+    "metrics": "recall_any@k, recall_all@k and NDCG@k at turn level against evidence dialogue ids",
+    "excluded": "category 5 (adversarial, unanswerable) and 5 questions without valid evidence ids",
+    "ranking": "limit 100, token budget 16,000, relevance gate disabled",
+    "embedder": "multilingual-e5-small via an OpenAI-compatible endpoint (query prefix \"query: \", passage prefix \"passage: \")",
+    "role": "held-out: measured before retrieval changes and never used for tuning"
+  },
+  "configs": [
+    {
+      "id": "hybrid",
+      "label": "Hybrid (default)",
+      "weights": {
+        "fts": 1,
+        "vector": 1,
+        "entity": 1,
+        "slot": 1
+      }
+    },
+    {
+      "id": "fts",
+      "label": "Full-text leg only",
+      "weights": {
+        "fts": 1,
+        "vector": 0,
+        "entity": 0,
+        "slot": 0
+      }
+    },
+    {
+      "id": "vector",
+      "label": "Vector leg only",
+      "weights": {
+        "fts": 0,
+        "vector": 1,
+        "entity": 0,
+        "slot": 0
+      }
+    }
+  ],
+  "memoriesIndexed": 5882,
+  "elapsedSeconds": 202,
+  "overall": {
+    "questions": 1535,
+    "configs": {
+      "hybrid": {
+        "recall_any@5": 0.5960912052117264,
+        "recall_all@5": 0.48534201954397393,
+        "ndcg@5": 0.44567302430291383,
+        "recall_any@10": 0.6716612377850163,
+        "recall_all@10": 0.5530944625407166,
+        "ndcg@10": 0.4712055380924538,
+        "recall_any@20": 0.7381107491856678,
+        "recall_all@20": 0.61628664495114,
+        "ndcg@20": 0.49035897038022813
+      },
+      "fts": {
+        "recall_any@5": 0.501628664495114,
+        "recall_all@5": 0.41172638436482084,
+        "ndcg@5": 0.36755337216040135,
+        "recall_any@10": 0.5778501628664495,
+        "recall_all@10": 0.47296416938110747,
+        "ndcg@10": 0.39169662309794234,
+        "recall_any@20": 0.6638436482084691,
+        "recall_all@20": 0.5407166123778502,
+        "ndcg@20": 0.4128909535566927
+      },
+      "vector": {
+        "recall_any@5": 0.5485342019543974,
+        "recall_all@5": 0.4364820846905538,
+        "ndcg@5": 0.40204421413470354,
+        "recall_any@10": 0.6371335504885993,
+        "recall_all@10": 0.5205211726384364,
+        "ndcg@10": 0.432231608265474,
+        "recall_any@20": 0.7296416938110749,
+        "recall_all@20": 0.5980456026058631,
+        "ndcg@20": 0.45691058094064324
+      }
+    }
+  },
+  "byCategory": {
+    "multi-hop": {
+      "questions": 282,
+      "configs": {
+        "hybrid": {
+          "recall_any@5": 0.475177304964539,
+          "recall_all@5": 0.07446808510638298,
+          "ndcg@5": 0.2205167544995289,
+          "recall_any@10": 0.574468085106383,
+          "recall_all@10": 0.11347517730496454,
+          "ndcg@10": 0.25278056939280846,
+          "recall_any@20": 0.6560283687943262,
+          "recall_all@20": 0.18085106382978725,
+          "ndcg@20": 0.2842703065177395
+        },
+        "fts": {
+          "recall_any@5": 0.32978723404255317,
+          "recall_all@5": 0.03546099290780142,
+          "ndcg@5": 0.13515665272386887,
+          "recall_any@10": 0.4397163120567376,
+          "recall_all@10": 0.0673758865248227,
+          "ndcg@10": 0.16345589568682997,
+          "recall_any@20": 0.5354609929078015,
+          "recall_all@20": 0.09929078014184398,
+          "ndcg@20": 0.18618829165318462
+        },
+        "vector": {
+          "recall_any@5": 0.4787234042553192,
+          "recall_all@5": 0.08156028368794327,
+          "ndcg@5": 0.21978850638246533,
+          "recall_any@10": 0.5531914893617021,
+          "recall_all@10": 0.14184397163120568,
+          "ndcg@10": 0.24730292379679114,
+          "recall_any@20": 0.7163120567375887,
+          "recall_all@20": 0.21631205673758866,
+          "ndcg@20": 0.29211266151959825
+        }
+      }
+    },
+    "temporal": {
+      "questions": 320,
+      "configs": {
+        "hybrid": {
+          "recall_any@5": 0.6875,
+          "recall_all@5": 0.61875,
+          "ndcg@5": 0.5676362898218068,
+          "recall_any@10": 0.759375,
+          "recall_all@10": 0.696875,
+          "ndcg@10": 0.5936809783690716,
+          "recall_any@20": 0.80625,
+          "recall_all@20": 0.753125,
+          "ndcg@20": 0.6081637640396343
+        },
+        "fts": {
+          "recall_any@5": 0.578125,
+          "recall_all@5": 0.525,
+          "ndcg@5": 0.44118221320402934,
+          "recall_any@10": 0.653125,
+          "recall_all@10": 0.590625,
+          "ndcg@10": 0.46583871199367516,
+          "recall_any@20": 0.721875,
+          "recall_all@20": 0.65,
+          "ndcg@20": 0.4825003566904937
+        },
+        "vector": {
+          "recall_any@5": 0.6375,
+          "recall_all@5": 0.575,
+          "ndcg@5": 0.516949033979221,
+          "recall_any@10": 0.71875,
+          "recall_all@10": 0.65,
+          "ndcg@10": 0.543981827994982,
+          "recall_any@20": 0.775,
+          "recall_all@20": 0.71875,
+          "ndcg@20": 0.560815966703586
+        }
+      }
+    },
+    "open-domain": {
+      "questions": 92,
+      "configs": {
+        "hybrid": {
+          "recall_any@5": 0.32608695652173914,
+          "recall_all@5": 0.1956521739130435,
+          "ndcg@5": 0.21646059644346277,
+          "recall_any@10": 0.3695652173913043,
+          "recall_all@10": 0.22826086956521738,
+          "ndcg@10": 0.22803152056156298,
+          "recall_any@20": 0.5108695652173914,
+          "recall_all@20": 0.30434782608695654,
+          "ndcg@20": 0.25761955300263834
+        },
+        "fts": {
+          "recall_any@5": 0.2608695652173913,
+          "recall_all@5": 0.10869565217391304,
+          "ndcg@5": 0.14375112113744515,
+          "recall_any@10": 0.3695652173913043,
+          "recall_all@10": 0.18478260869565216,
+          "ndcg@10": 0.17640669371354328,
+          "recall_any@20": 0.4673913043478261,
+          "recall_all@20": 0.22826086956521738,
+          "ndcg@20": 0.1972927432882226
+        },
+        "vector": {
+          "recall_any@5": 0.33695652173913043,
+          "recall_all@5": 0.18478260869565216,
+          "ndcg@5": 0.20786416486962978,
+          "recall_any@10": 0.40217391304347827,
+          "recall_all@10": 0.25,
+          "ndcg@10": 0.23056026781959885,
+          "recall_any@20": 0.5,
+          "recall_all@20": 0.30434782608695654,
+          "ndcg@20": 0.2505646331516492
+        }
+      }
+    },
+    "single-hop": {
+      "questions": 841,
+      "configs": {
+        "hybrid": {
+          "recall_any@5": 0.6313912009512486,
+          "recall_all@5": 0.6040428061831153,
+          "ndcg@5": 0.4998387395009861,
+          "recall_any@10": 0.703923900118906,
+          "recall_all@10": 0.6813317479191439,
+          "ndcg@10": 0.5244465724534815,
+          "recall_any@20": 0.7645659928656362,
+          "recall_all@20": 0.7443519619500595,
+          "ndcg@20": 0.5400991554419997
+        },
+        "fts": {
+          "recall_any@5": 0.5564803804994055,
+          "recall_all@5": 0.5279429250891795,
+          "ndcg@5": 0.4419463006280023,
+          "recall_any@10": 0.6183115338882283,
+          "recall_all@10": 0.5957193816884662,
+          "ndcg@10": 0.4635695008466513,
+          "recall_any@20": 0.7063020214030915,
+          "recall_all@20": 0.6813317479191439,
+          "ndcg@20": 0.48600650290113023
+        },
+        "vector": {
+          "recall_any@5": 0.5612366230677764,
+          "recall_all@5": 0.5303210463733651,
+          "ndcg@5": 0.4406781401374056,
+          "recall_any@10": 0.6599286563614745,
+          "recall_all@10": 0.6278240190249703,
+          "ndcg@10": 0.47378164634840786,
+          "recall_any@20": 0.7419738406658739,
+          "recall_all@20": 0.7122473246135553,
+          "ndcg@20": 0.4952067961953178
+        }
+      }
+    }
+  },
+  "latencyMs": {
+    "hybrid": {
+      "p50": 51.79625000001397,
+      "p95": 64.38608299999032
+    },
+    "fts": {
+      "p50": 39.047749999997905,
+      "p95": 49.466499999994994
+    },
+    "vector": {
+      "p50": 38.17420900000434,
+      "p95": 48.1807919999992
+    }
+  }
+}

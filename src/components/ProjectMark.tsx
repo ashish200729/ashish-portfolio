@@ -13,6 +13,14 @@ const GLYPHS: Record<string, ReactNode> = {
     </g>
   ),
   'computer-mcp': <path d="M14 8v28l7-6.5L26 40l5-2.5L26 27h9.5z" />,
+  // Two bars on a time axis: an earlier value that ended, and the one that replaced it.
+  hitherto: (
+    <>
+      <path d="M8 13h15" strokeWidth="7" strokeOpacity=".35" />
+      <path d="M25 27h15" strokeWidth="7" />
+      <path d="M8 40h32" strokeOpacity=".4" />
+    </>
+  ),
   // Ventmark's own mark (packages/ui/src/lib/brand-mark.ts), a filled shape scaled onto the grid.
   ventmark: (
     <g transform="translate(.96 .96) scale(.72)" fill="currentColor" stroke="none">

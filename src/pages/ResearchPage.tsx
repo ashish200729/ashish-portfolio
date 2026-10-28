@@ -1,8 +1,12 @@
-import { useRef, type SyntheticEvent } from 'react';
+import { useEffect, useRef, useState, type SyntheticEvent } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import Link from '../components/Link';
+import MemoryField from '../components/MemoryField';
 import ResearchComparison from '../components/ResearchComparison';
+import ResearchFigure from '../components/ResearchFigure';
 import type { ResearchNote, ResearchParagraph, ResearchReference } from '../data/research';
+
+const label = 'font-mono text-[11px] uppercase leading-5 tracking-[0.08em]';
 
 function Citations({ ids, references }: { ids?: string[]; references: ResearchReference[] }) {
   if (!ids?.length) return null;
@@ -25,39 +29,118 @@ function Paragraphs({ paragraphs, references }: { paragraphs: ResearchParagraph[
   );
 }
 
+/** Tracks which section is being read, for the contents rail. */
+function useActiveSection(ids: string[]) {
+  const [active, setActive] = useState(ids[0]);
+  const key = ids.join(' ');
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const elements = key.split(' ').map(id => document.getElementById(id)).filter((element): element is HTMLElement => Boolean(element));
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) setActive(visible[0].target.id);
+    }, { rootMargin: '-15% 0px -70% 0px' });
+    elements.forEach(element => observer.observe(element));
+    return () => observer.disconnect();
+  }, [key]);
+
+  return active;
+}
+
 export default function ResearchPage({ note }: { note: ResearchNote }) {
   const samples = useRef<HTMLUListElement>(null);
+  const signal = note.theme === 'signal';
+  const abstractLabel = note.kind === 'working-paper' ? 'Abstract' : 'Overview';
+  const contents = [
+    { id: 'abstract', title: abstractLabel },
+    ...(note.samples ? [{ id: 'samples', title: 'Listen' }] : []),
+    ...note.sections.map(section => ({ id: section.id, title: section.title })),
+    ...(note.references.length > 0 ? [{ id: 'references', title: 'References' }] : []),
+  ];
+  const active = useActiveSection(signal ? contents.map(item => item.id) : []);
   const pauseOtherSamples = (event: SyntheticEvent<HTMLAudioElement>) => {
     const current = event.currentTarget;
     samples.current?.querySelectorAll('audio').forEach(audio => { if (audio !== current) audio.pause(); });
   };
 
+  const sectionHeading = (id: string, title: string, number?: number) => signal ? (
+    <h2 id={`${id}-title`} className="mb-4">
+      {number !== undefined && <span className={`${label} block text-ink-3`}>{String(number).padStart(2, '0')}</span>}
+      <span className="mt-1 block text-lg font-normal leading-7 tracking-[-0.02em] text-ink">{title}</span>
+    </h2>
+  ) : (
+    <h2 id={`${id}-title`} className="mb-3 text-sm font-medium leading-6 text-ink">{title}</h2>
+  );
+
   return (
-    <article className="reading-column pt-10 sm:pt-12">
-      <Link to="/research" className="text-link inline-flex min-h-10 items-center gap-1.5 text-xs no-underline">
-        <ArrowLeft size={13} aria-hidden="true" />Research & writing
+    <article className={`reading-column pt-10 sm:pt-12 ${signal ? 'paper-signal relative' : ''}`}>
+      <Link to="/research" className={signal ? `${label} inline-flex min-h-10 items-center gap-1.5 text-ink-2 transition-colors hover:text-ink` : 'text-link inline-flex min-h-10 items-center gap-1.5 text-xs no-underline'}>
+        <ArrowLeft size={13} aria-hidden="true" />{signal ? 'Research' : 'Research & writing'}
       </Link>
 
-      <header className="mt-5">
-        <h1 className="text-lg font-medium leading-7 tracking-[-0.02em]">{note.title}</h1>
-        <p className="mt-3 text-sm leading-[1.85] text-ink-2">{note.summary}</p>
-        <p className="citation_author mt-4 text-sm font-medium leading-6 text-ink">By Ashish Prajapati</p>
-        <p className="mt-1 text-xs leading-5 text-ink-3">{note.date} · {note.kind === 'working-paper' ? 'Independent working paper' : 'Article'}</p>
-        {note.pdfUrl && <a href={note.pdfUrl} download className="text-link mt-3 inline-flex min-h-10 items-center text-xs">Download the paper (PDF)</a>}
-      </header>
+      {signal ? (
+        <header className="mt-6">
+          {note.eyebrow && <p className={`${label} text-ink-3`}>{note.eyebrow}</p>}
+          <h1 className="mt-3 text-balance text-[26px] font-normal leading-[1.2] tracking-[-0.025em] text-ink sm:text-[32px]">{note.title}</h1>
+          <p className="mt-4 text-[15px] leading-[1.75] text-ink-2">{note.summary}</p>
+          <p className="citation_author mt-5 text-sm font-medium leading-6 text-ink">By Ashish Prajapati</p>
+          <p className="mt-1 text-xs leading-5 text-ink-3">{note.date} · {note.kind === 'working-paper' ? 'Independent working paper' : 'Article'}</p>
+          {note.pdfUrl && <a href={note.pdfUrl} download className="text-link mt-3 inline-flex min-h-10 items-center text-xs">Download the paper (PDF)</a>}
+          {note.stats && note.stats.length > 0 && (
+            <dl className="mt-7 grid border border-edge" style={{ gridTemplateColumns: `repeat(${note.stats.length}, minmax(0, 1fr))` }}>
+              {note.stats.map((stat, index) => (
+                <div key={stat.label} className={`flex flex-col-reverse justify-end gap-1 px-3 py-3.5 sm:px-4 sm:py-4 ${index ? 'border-l border-edge' : ''}`}>
+                  <dt className="text-[11px] leading-4 text-ink-2 sm:text-xs">{stat.label}</dt>
+                  <dd className="text-[22px] font-medium leading-7 tracking-[-0.02em] text-accent tabular-nums sm:text-[26px] sm:leading-8">{stat.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          <MemoryField caption="Each dot is a fact. When one stops being true it becomes a ring: closed, not deleted, and linked to the fact that replaced it." />
+        </header>
+      ) : (
+        <header className="mt-5">
+          <h1 className="text-lg font-medium leading-7 tracking-[-0.02em]">{note.title}</h1>
+          <p className="mt-3 text-sm leading-[1.85] text-ink-2">{note.summary}</p>
+          <p className="citation_author mt-4 text-sm font-medium leading-6 text-ink">By Ashish Prajapati</p>
+          <p className="mt-1 text-xs leading-5 text-ink-3">{note.date} · {note.kind === 'working-paper' ? 'Independent working paper' : 'Article'}</p>
+          {note.pdfUrl && <a href={note.pdfUrl} download className="text-link mt-3 inline-flex min-h-10 items-center text-xs">Download the paper (PDF)</a>}
+        </header>
+      )}
 
-      <nav className="mt-8 border-y border-edge-subtle py-4" aria-label="On this page">
-        <p className="text-xs font-medium text-ink-2">On this page</p>
-        <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs leading-6">
-          <li><a href="#abstract" className="text-link">{note.kind === 'working-paper' ? 'Abstract' : 'Overview'}</a></li>
-          {note.samples && <li><a href="#samples" className="text-link">Listen</a></li>}
-          {note.sections.map(section => <li key={section.id}><a href={`#${section.id}`} className="text-link">{section.title}</a></li>)}
-          {note.references.length > 0 && <li><a href="#references" className="text-link">References</a></li>}
-        </ul>
-      </nav>
+      {signal ? (
+        <nav aria-label="On this page" className="mt-9 border-y border-edge-subtle py-4 xl:absolute xl:right-full xl:top-0 xl:mr-12 xl:mt-0 xl:h-full xl:w-48 xl:border-0 xl:pt-[7.5rem]">
+          <div className="xl:sticky xl:top-10">
+            <p className={`${label} text-ink-3`}>On this page</p>
+            <ol className="mt-3 grid gap-x-5 gap-y-0.5 sm:grid-cols-2 xl:grid-cols-1">
+              {contents.map((item, index) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    aria-current={active === item.id ? 'location' : undefined}
+                    className={`group flex min-h-8 items-center gap-2.5 text-xs leading-5 transition-colors xl:min-h-9 ${active === item.id ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
+                  >
+                    <span className={`h-px shrink-0 transition-all duration-300 ${active === item.id ? 'w-5 bg-accent' : 'w-2.5 bg-edge group-hover:bg-ink-3'}`} aria-hidden="true" />
+                    <span className="font-mono text-[10px] text-ink-3 tabular-nums" aria-hidden="true">{String(index).padStart(2, '0')}</span>
+                    <span className="truncate">{item.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </nav>
+      ) : (
+        <nav className="mt-8 border-y border-edge-subtle py-4" aria-label="On this page">
+          <p className="text-xs font-medium text-ink-2">On this page</p>
+          <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs leading-6">
+            {contents.map(item => <li key={item.id}><a href={`#${item.id}`} className="text-link">{item.title}</a></li>)}
+          </ul>
+        </nav>
+      )}
 
-      <section id="abstract" className="mt-9" aria-labelledby="abstract-title">
-        <h2 id="abstract-title" className="mb-3 text-sm font-medium leading-6 text-ink">{note.kind === 'working-paper' ? 'Abstract' : 'Overview'}</h2>
+      <section id="abstract" className={signal ? 'mt-12' : 'mt-9'} aria-labelledby="abstract-title">
+        {sectionHeading('abstract', abstractLabel)}
         <Paragraphs paragraphs={note.abstract} references={note.references} />
       </section>
 
@@ -81,19 +164,22 @@ export default function ResearchPage({ note }: { note: ResearchNote }) {
         </section>
       )}
 
-      {note.sections.map(section => (
-        <section id={section.id} key={section.id} className="mt-10" aria-labelledby={`${section.id}-title`}>
-          <h2 id={`${section.id}-title`} className="mb-3 text-sm font-medium leading-6 text-ink">{section.title}</h2>
+      {note.sections.map((section, index) => (
+        <section id={section.id} key={section.id} className={signal ? 'mt-14' : 'mt-10'} aria-labelledby={`${section.id}-title`}>
+          {sectionHeading(section.id, section.title, index + 1)}
           <Paragraphs paragraphs={section.paragraphs} references={note.references} />
           {section.comparison && <ResearchComparison comparison={section.comparison} />}
+          {section.figure && <ResearchFigure figure={section.figure} />}
         </section>
       ))}
 
       {note.references.length > 0 && (
-        <section id="references" className="mt-10 border-t border-edge-subtle pt-7" aria-labelledby="references-title">
-          <h2 id="references-title" className="text-sm font-medium leading-6 text-ink">References</h2>
+        <section id="references" className={signal ? 'mt-14 border-t border-edge-subtle pt-8' : 'mt-10 border-t border-edge-subtle pt-7'} aria-labelledby="references-title">
+          {signal
+            ? <h2 id="references-title" className={`${label} text-ink-3`}>References</h2>
+            : <h2 id="references-title" className="text-sm font-medium leading-6 text-ink">References</h2>}
           {note.samples && <p className="mt-3 text-sm leading-[1.85] text-ink-2">{note.samples.attribution}<Citations ids={note.samples.attributionCitations} references={note.references} /></p>}
-          <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm leading-6 text-ink-2">
+          <ol className={`mt-4 list-decimal space-y-2 pl-5 text-sm leading-6 text-ink-2 ${signal ? 'marker:font-mono marker:text-xs marker:text-ink-3' : ''}`}>
             {note.references.map(reference => (
               <li id={`ref-${reference.id}`} key={reference.id}>
                 <a href={reference.url} target={reference.url.startsWith('https://') ? '_blank' : undefined} rel={reference.url.startsWith('https://') ? 'noopener noreferrer' : undefined} className="text-link inline-flex min-h-9 items-center gap-1.5">
@@ -107,7 +193,9 @@ export default function ResearchPage({ note }: { note: ResearchNote }) {
 
       {note.records && note.records.length > 0 && (
         <section id="records" className="mt-8" aria-labelledby="records-title">
-          <h2 id="records-title" className="text-sm font-medium leading-6 text-ink">Experiment records</h2>
+          {signal
+            ? <h2 id="records-title" className={`${label} text-ink-3`}>Experiment records</h2>
+            : <h2 id="records-title" className="text-sm font-medium leading-6 text-ink">Experiment records</h2>}
           <ul className="mt-3 space-y-1">
             {note.records.map(record => <li key={record.url}><a href={record.url} download className="text-link inline-flex min-h-9 items-center text-sm">{record.label}</a></li>)}
           </ul>

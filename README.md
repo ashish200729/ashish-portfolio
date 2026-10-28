@@ -30,6 +30,10 @@ Add an entry to `RESEARCH_NOTES` in `src/data/research.ts` with a unique slug, t
 
 The research index, three most recent home-page entries, article routes, crawlable fallbacks, structured data, and sitemap entries are generated from the same data. Entries sort by `publishedAt` when supplied, otherwise by `createdAt`. The build checks duplicate slugs, citation IDs, figures, project links, and local assets so a new entry does not silently create broken pages. A project can link to a note by setting its `researchSlug` in `src/data/projects.ts`.
 
+A section can carry one `figure`: `bars` (a few systems over selectable measures, values from 0 to 1), `timeline` (steps on a valid-time axis), `pipeline` (inputs fused into ordered stages), or `table`. The build rejects bars outside 0–1, timeline facts off the axis, and rows with the wrong number of cells, and the crawlable fallback renders every figure as lists and tables. Set `theme: 'signal'` with an `eyebrow` and up to three `stats` for the Hitherto-style page; omit it for the default reading layout.
+
+The Hitherto paper's numbers come from `docs/eval/results.json`, `longmemeval.json`, and `locomo.json` in its repository, copied to `public/assets/research/hitherto/` as downloadable records. If those runs are regenerated, copy the files again and update the figures and text in `src/data/research.ts` to match.
+
 For the Pocket TTS working paper, regenerate its printable PDF after editing the note (Node with TypeScript stripping, `uv`, and Arial or DejaVu Sans are required):
 
 ```sh

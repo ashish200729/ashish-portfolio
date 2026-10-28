@@ -3,7 +3,7 @@ import path from 'node:path';
 import type { Plugin } from 'vite';
 import { EXPERIENCE } from '../src/data/experience';
 import { PROJECTS, getProject, type Project } from '../src/data/projects';
-import { RESEARCH_COLLECTION, RESEARCH_NOTES, getResearchNote, listResearchNotes, validateResearchNotes, type ResearchNote, type ResearchParagraph } from '../src/data/research';
+import { RESEARCH_COLLECTION, RESEARCH_NOTES, getResearchNote, listResearchNotes, validateResearchNotes, type ResearchFigure, type ResearchNote, type ResearchParagraph, type ResearchTimelineFigure } from '../src/data/research';
 import {
   HOME_META, NOT_FOUND_META, OG_IMAGE_PATH, PROJECTS_META, RESEARCH_META, SITE_NAME, indexablePages, projectMeta, researchMeta, researchStructuredData, structuredData,
   type PageMeta,
@@ -81,22 +81,47 @@ function paragraphsFallback(note: ResearchNote, paragraphs: ResearchParagraph[])
   return paragraphs.map(paragraph => `<p>${escapeHtml(paragraph.text)}${citationFallback(note, paragraph.citations)}</p>`).join('');
 }
 
+/** Every interactive figure as plain lists and tables, so crawlers and no-JavaScript readers get the same data. */
+function figureFallback(figure: ResearchFigure) {
+  const head = `<figcaption>${escapeHtml(figure.title)}</figcaption><p>${escapeHtml(figure.description)}</p>`;
+  const note = 'note' in figure && figure.note ? `<p>${escapeHtml(figure.note)}</p>` : '';
+  if (figure.kind === 'bars') {
+    const headings = figure.metrics.map(metric => `<th scope="col">${escapeHtml(metric.label)}</th>`).join('');
+    const rows = figure.rows.map(row => `<tr><th scope="row">${escapeHtml(row.label)}</th>${figure.metrics.map(metric => `<td>${(row.values[metric.id] * 100).toFixed(1)}%</td>`).join('')}</tr>`).join('');
+    return `<figure>${head}<table><thead><tr><th scope="col">System</th>${headings}</tr></thead><tbody>${rows}</tbody></table>${note}</figure>`;
+  }
+  if (figure.kind === 'timeline') {
+    const describe = (fact: ResearchTimelineFigure['steps'][number]['facts'][number]) => fact.state === 'replaced'
+      ? `Earlier belief: ${fact.value} from ${figure.axis[fact.from]}, closed but kept`
+      : `${fact.value} from ${figure.axis[fact.from]}${fact.to === undefined ? ', still true' : ` until ${figure.axis[fact.to]}`}`;
+    const steps = figure.steps.map(step => `<li><strong>${escapeHtml(step.title)}</strong> ${escapeHtml(step.caption)}<ul>${step.facts.map(fact => `<li>${escapeHtml(describe(fact))}</li>`).join('')}${(step.answers ?? []).map(answer => `<li>${escapeHtml(answer.query)}: ${escapeHtml(answer.answer)}</li>`).join('')}</ul></li>`).join('');
+    return `<figure>${head}<ol>${steps}</ol>${note}</figure>`;
+  }
+  if (figure.kind === 'pipeline') {
+    const list = (items: Array<{ label: string; detail: string }>) => items.map(item => `<li>${escapeHtml(item.label)}: ${escapeHtml(item.detail)}</li>`).join('');
+    return `<figure>${head}<ul>${list(figure.inputs)}</ul><ol>${list(figure.stages)}</ol>${note}</figure>`;
+  }
+  const rows = figure.rows.map(row => `<tr>${row.map((cell, index) => index === 0 ? `<th scope="row">${escapeHtml(cell)}</th>` : `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`).join('');
+  return `<figure>${head}<table><thead><tr>${figure.columns.map(column => `<th scope="col">${escapeHtml(column)}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>${note}</figure>`;
+}
+
 function researchFallback(note: ResearchNote) {
   const samples = note.samples ? `<section id="samples"><h2>Listen to the same line</h2><p>${escapeHtml(note.samples.description)}</p><blockquote>${escapeHtml(note.samples.text)}</blockquote><ul>${note.samples.items.map(sample => `<li>${escapeHtml(sample.label)}<br><audio controls preload="metadata" aria-label="${escapeHtml(sample.label)} speech example" src="${escapeHtml(sample.src)}"><a href="${escapeHtml(sample.src)}">Download ${escapeHtml(sample.label)} audio</a></audio></li>`).join('')}</ul><p>${escapeHtml(note.samples.note)}</p></section>` : '';
   const sections = note.sections.map(section => {
     const figure = section.comparison;
     const rows = figure?.rows.map(row => `<tr><th scope="row">${escapeHtml(row.tone)}</th><td>${row.base.toFixed(6)}</td><td>${row.matched.toFixed(6)}</td><td>${row.swapped.toFixed(6)}</td></tr>`).join('') ?? '';
     const table = figure ? `<figure><figcaption>${escapeHtml(figure.title)}</figcaption><p>${escapeHtml(figure.description)}</p><table><thead><tr><th scope="col">Tone</th><th scope="col">Base</th><th scope="col">Matched</th><th scope="col">Swapped</th></tr></thead><tbody>${rows}</tbody></table><p>${escapeHtml(figure.note)}</p></figure>` : '';
-    return `<section id="${escapeHtml(section.id)}"><h2>${escapeHtml(section.title)}</h2>${paragraphsFallback(note, section.paragraphs)}${table}</section>`;
+    return `<section id="${escapeHtml(section.id)}"><h2>${escapeHtml(section.title)}</h2>${paragraphsFallback(note, section.paragraphs)}${table}${section.figure ? figureFallback(section.figure) : ''}</section>`;
   }).join('');
   const references = note.references.map(reference => `<li id="ref-${escapeHtml(reference.id)}"><a href="${escapeHtml(reference.url)}">${escapeHtml(reference.label)}</a></li>`).join('');
   const records = (note.records ?? []).map(link => `<li><a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a></li>`).join('');
   const attribution = note.samples ? `<p>${escapeHtml(note.samples.attribution)}${citationFallback(note, note.samples.attributionCitations)}</p>` : '';
   const project = note.projectSlug ? ` · <a href="/projects/${escapeHtml(note.projectSlug)}">Project overview</a>` : '';
   const pdf = note.pdfUrl ? `<p><a href="${escapeHtml(note.pdfUrl)}" download>Download the paper (PDF)</a></p>` : '';
+  const stats = note.stats?.length ? `<dl>${note.stats.map(stat => `<dt>${escapeHtml(stat.label)}</dt><dd>${escapeHtml(stat.value)}</dd>`).join('')}</dl>` : '';
   return `<main style="max-width:560px;margin:72px auto;padding:24px;font-family:system-ui;line-height:1.8">
 <p><a href="/research">Research &amp; writing</a>${project}</p>
-<article><h1>${escapeHtml(note.title)}</h1><p>${escapeHtml(note.summary)}</p><p class="citation_author">By ${SITE_NAME}</p><p>${escapeHtml(note.date)} · ${note.kind === 'working-paper' ? 'Independent working paper' : 'Article'}</p>${pdf}
+<article><h1>${escapeHtml(note.title)}</h1><p>${escapeHtml(note.summary)}</p><p class="citation_author">By ${SITE_NAME}</p><p>${escapeHtml(note.date)} · ${note.kind === 'working-paper' ? 'Independent working paper' : 'Article'}</p>${pdf}${stats}
 <section id="abstract"><h2>${note.kind === 'working-paper' ? 'Abstract' : 'Overview'}</h2>${paragraphsFallback(note, note.abstract)}</section>
 ${samples}${sections}${references ? `<section id="references"><h2>References</h2>${attribution}<ol>${references}</ol></section>` : ''}${records ? `<section id="records"><h2>Experiment records</h2><ul>${records}</ul></section>` : ''}</article></main>`;
 }

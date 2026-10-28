@@ -18,6 +18,7 @@ export default {
         'ink-3': 'rgb(var(--ink-3) / <alpha-value>)',
         accent: 'rgb(var(--accent) / <alpha-value>)',
         'accent-bg': 'rgb(var(--accent-bg) / <alpha-value>)',
+        'signal-panel': 'rgb(var(--signal-panel) / <alpha-value>)',
         'muted-foreground': '#6b7280',
         'primary': '#ffffff',
         'secondary': '#9ca3af',

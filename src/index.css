@@ -32,6 +32,19 @@
     --accent-bg: 237 240 233;
     --highlight: 248 185 157;
     --highlight-ink: 53 37 30;
+    --signal-panel: 10 27 94;
+  }
+
+  /* A page-scoped variant for papers with `theme: 'signal'`: one strong blue and a deep navy figure panel. */
+  .paper-signal {
+    --accent: 22 82 240;
+    --accent-bg: 236 241 255;
+  }
+
+  .dark .paper-signal {
+    --accent: 128 166 255;
+    --accent-bg: 27 37 72;
+    --signal-panel: 8 19 64;
   }
 
   .dark {
@@ -73,8 +86,20 @@
   .text-link { @apply text-ink underline decoration-edge underline-offset-4 transition-colors hover:decoration-ink; }
   .icon-button { @apply inline-flex size-9 shrink-0 items-center justify-center rounded-full text-ink-2 transition-colors hover:bg-canvas-raised hover:text-ink disabled:cursor-default disabled:opacity-40; }
   .skip-link { @apply fixed left-4 top-4 z-50 -translate-y-24 rounded-lg bg-canvas px-4 py-3 text-sm text-ink shadow-md focus:translate-y-0; }
+  .signal-flow { stroke-dasharray: 3 5; }
+  @media (prefers-reduced-motion: no-preference) {
+    .signal-flow { animation: signal-flow 0.9s linear infinite; }
+    .signal-stage { animation: signal-stage 3.6s ease-in-out infinite; }
+  }
   .github-calendar .react-activity-calendar__scroll-container { overflow: visible !important; }
   .github-calendar .react-activity-calendar__scroll-container > svg { width: 100%; height: auto; display: block; }
+}
+
+/* Dashes travel the way ranked results do; each pipeline stage lights up in turn. */
+@keyframes signal-flow { to { stroke-dashoffset: -8; } }
+@keyframes signal-stage {
+  0%, 22% { border-color: rgb(var(--accent)); box-shadow: 0 0 0 3px rgb(var(--accent) / 0.1); }
+  30%, 100% { border-color: rgb(var(--edge)); box-shadow: 0 0 0 3px rgb(var(--accent) / 0); }
 }
 
 @media (max-width: 380px) {
