@@ -3,10 +3,10 @@ import { useSpotify } from '../hooks/useSpotify';
 
 // Shown as "On repeat" whenever live Spotify activity is unavailable.
 const FALLBACK_TRACK = {
-  name: 'Kun Faya Kun',
-  artists: [{ name: 'A.R. Rahman' }, { name: 'Javed Ali' }, { name: 'Mohit Chauhan' }],
-  album: { name: 'Rockstar', images: [{ url: 'https://i.scdn.co/image/ab67616d00001e0254e544672baa16145d67612b' }] },
-  external_urls: { spotify: 'https://open.spotify.com/track/7F8RNvTQlvbeBLeenycvN6' },
+  name: 'Finding Her',
+  artists: [{ name: 'Kushagra' }, { name: 'Bharath' }, { name: 'Saaheal' }],
+  album: { name: 'Finding Her', images: [{ url: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02292341cd3e621d7f9171331f' }] },
+  external_urls: { spotify: 'https://open.spotify.com/track/5ThyDv6aRVU8AH4vXQNldF' },
 };
 
 export default function SpotifyPlayer() {

@@ -1,9 +1,12 @@
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import Link from '../components/Link';
 import ProjectMark from '../components/ProjectMark';
+import ProjectVideo from '../components/ProjectVideo';
 import type { Project } from '../data/projects';
+import { getResearchNote } from '../data/research';
 
 export default function ProjectPage({ project }: { project: Project }) {
+  const research = project.researchSlug ? getResearchNote(project.researchSlug) : undefined;
   return (
     <article className="reading-column pt-10 sm:pt-12">
       <Link to="/projects" className="text-link inline-flex min-h-10 items-center gap-1.5 text-xs no-underline"><ArrowLeft size={13} aria-hidden="true" />All projects</Link>
@@ -20,6 +23,8 @@ export default function ProjectPage({ project }: { project: Project }) {
 
       <p className="mt-6 text-xs leading-5 text-ink-3">{[project.role, project.period, project.status].join(' · ')}</p>
 
+      {project.video && <ProjectVideo video={project.video} />}
+
       <p className="mt-4 text-sm leading-[1.85] text-ink-2">{project.overview}</p>
 
       {project.highlights.length > 0 && (
@@ -30,8 +35,15 @@ export default function ProjectPage({ project }: { project: Project }) {
 
       <p className="mt-6 text-xs leading-5 text-ink-3">{project.stack.join(' · ')}</p>
 
-      {project.links.length > 0 && (
+      {(research || project.links.length > 0) && (
         <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-1">
+          {research && (
+            <li>
+              <Link to={`/research/${research.slug}`} className="text-link inline-flex min-h-10 items-center gap-1.5 text-sm">
+                {research.kind === 'working-paper' ? 'Read the working paper' : 'Read the article'}<ArrowRight size={14} aria-hidden="true" />
+              </Link>
+            </li>
+          )}
           {project.links.map(link => (
             <li key={link.url}>
               <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-link inline-flex min-h-10 items-center gap-1.5 text-sm">

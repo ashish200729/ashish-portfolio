@@ -13,7 +13,8 @@ export interface ExperienceItem {
   /**
    * Employer and product are intentionally undisclosed. `company` is then a
    * placeholder that is rendered blurred.
-   * Never add the real company, product, domain, or logo to this repository.
+   * Never add the real company, product, domain, or logo to the site's code or data.
+   * (The résumé PDF names them by the owner's choice; see PRODUCT.md.)
    */
   confidential?: boolean;
 }

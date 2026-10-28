@@ -5,14 +5,18 @@ import SiteHeader from './components/SiteHeader';
 import SocialLinks from './components/SocialLinks';
 import VisitorCount from './components/VisitorCount';
 import { getProject } from './data/projects';
-import { HOME_META, NOT_FOUND_META, PROJECTS_META, projectMeta, type PageMeta } from './data/seo';
+import { getResearchNote } from './data/research';
+import { HOME_META, NOT_FOUND_META, PROJECTS_META, RESEARCH_META, projectMeta, researchMeta, type PageMeta } from './data/seo';
 import { useVisitorCount } from './hooks/useVisitorCount';
 import { matchRoute, usePathname, useRouteEffects } from './router';
 
 const WorkSection = lazy(() => import('./components/WorkSection'));
+const ResearchSection = lazy(() => import('./components/ResearchSection'));
 const AboutSection = lazy(() => import('./components/AboutSection'));
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
 const ProjectPage = lazy(() => import('./pages/ProjectPage'));
+const ResearchPage = lazy(() => import('./pages/ResearchPage'));
+const ResearchIndexPage = lazy(() => import('./pages/ResearchIndexPage'));
 
 const SectionLoader = () => (
   <div className="reading-column py-12 text-sm text-ink-2" role="status">Loading…</div>
@@ -32,25 +36,33 @@ function App() {
   const route = matchRoute(pathname);
   const visitors = useVisitorCount();
   const project = route.name === 'project' ? getProject(route.slug) : undefined;
+  const research = route.name === 'research' ? getResearchNote(route.slug) : undefined;
 
   let meta: PageMeta = NOT_FOUND_META;
   if (route.name === 'home') meta = HOME_META;
   else if (route.name === 'projects') meta = PROJECTS_META;
+  else if (route.name === 'research-index') meta = RESEARCH_META;
   else if (project) meta = projectMeta(project);
-  useRouteEffects(pathname, meta);
+  else if (research) meta = researchMeta(research);
+  useRouteEffects(pathname, meta, project, research);
 
   let page;
   if (route.name === 'home') {
     page = (
       <>
         <Suspense fallback={<SectionLoader />}><WorkSection /></Suspense>
+        <Suspense fallback={<SectionLoader />}><ResearchSection /></Suspense>
         <Suspense fallback={<SectionLoader />}><AboutSection /></Suspense>
       </>
     );
   } else if (route.name === 'projects') {
     page = <Suspense fallback={<SectionLoader />}><ProjectsPage /></Suspense>;
+  } else if (route.name === 'research-index') {
+    page = <Suspense fallback={<SectionLoader />}><ResearchIndexPage /></Suspense>;
   } else if (project) {
     page = <Suspense fallback={<SectionLoader />}><ProjectPage key={project.slug} project={project} /></Suspense>;
+  } else if (research) {
+    page = <Suspense fallback={<SectionLoader />}><ResearchPage key={research.slug} note={research} /></Suspense>;
   } else {
     page = <NotFound />;
   }

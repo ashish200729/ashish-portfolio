@@ -1,5 +1,4 @@
 import { lazy, Suspense } from 'react';
-import { ArrowUpRight } from 'lucide-react';
 
 const GitHubGraph = lazy(() => import('./GitHubGraph'));
 
@@ -27,7 +26,6 @@ export default function AboutSection() {
         <h2 id="contact-title" className="text-lg font-medium tracking-[-0.02em]">Hey, you scrolled this far.</h2>
         <p className="mt-3 text-sm leading-6 text-ink-2">Let's create something amazing together.</p>
         <div className="mt-4 flex flex-wrap items-center gap-5">
-          <a href="https://wa.me/7623075589" target="_blank" rel="noopener noreferrer" className="text-link inline-flex min-h-10 items-center gap-1.5 text-sm">Book a call<ArrowUpRight size={14} /></a>
           <a href="mailto:ashishp.292007@gmail.com" className="text-link inline-flex min-h-10 items-center text-sm">Say hello</a>
         </div>
       </section>

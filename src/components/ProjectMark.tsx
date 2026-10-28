@@ -13,6 +13,13 @@ const GLYPHS: Record<string, ReactNode> = {
     </g>
   ),
   'computer-mcp': <path d="M14 8v28l7-6.5L26 40l5-2.5L26 27h9.5z" />,
+  // Ventmark's own mark (packages/ui/src/lib/brand-mark.ts), a filled shape scaled onto the grid.
+  ventmark: (
+    <g transform="translate(.96 .96) scale(.72)" fill="currentColor" stroke="none">
+      <path d="M9 36C9 21 21 9 36 9H52L41 20H36C27 20 20 27 20 36V41L9 52Z" />
+      <path d="M55 28C55 43 43 55 28 55H12L23 44H28C37 44 44 37 44 28V23L55 12Z" />
+    </g>
+  ),
 };
 
 const ICONS: Record<string, LucideIcon> = {

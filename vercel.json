@@ -33,6 +33,8 @@
   ],
   "rewrites": [
     { "source": "/projects", "destination": "/projects/index.html" },
-    { "source": "/projects/:slug", "destination": "/projects/:slug/index.html" }
+    { "source": "/projects/:slug", "destination": "/projects/:slug/index.html" },
+    { "source": "/research", "destination": "/research/index.html" },
+    { "source": "/research/:slug", "destination": "/research/:slug/index.html" }
   ]
 }

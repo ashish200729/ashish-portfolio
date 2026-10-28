@@ -4,6 +4,22 @@ export interface ProjectLink {
   kind: 'website' | 'github';
 }
 
+export interface ProjectVideo {
+  /** Local MP4 under `public/assets/projects/`, encoded for the web (H.264, AAC, faststart). */
+  src: string;
+  /** Local JPEG frame shown before playback. */
+  poster: string;
+  title: string;
+  /** What the film shows, for screen readers and search engines. */
+  description: string;
+  /** Length in whole seconds. */
+  seconds: number;
+  width: number;
+  height: number;
+  /** Date the film was rendered, in `YYYY-MM-DD` format. */
+  uploadDate: string;
+}
+
 export interface Project {
   slug: string;
   name: string;
@@ -26,6 +42,12 @@ export interface Project {
   stack: string[];
   /** Only list destinations that are public and live. */
   links: ProjectLink[];
+  /** Optional long-form research note on this site. */
+  researchSlug?: string;
+  /** A real product film, shown on the project page. */
+  video?: ProjectVideo;
+  /** Share card for the project page: a local 1200×630 PNG. */
+  socialImage?: { src: string; alt: string };
 }
 
 const GITHUB_PROFILE: ProjectLink = { label: 'GitHub profile', url: 'https://github.com/ashish200729', kind: 'github' };
@@ -80,7 +102,6 @@ export const PROJECTS: Project[] = [
     period: 'Aug 2026',
     year: '2026',
     status: 'Live',
-    featured: true,
     mark: 'agentui',
     overview:
       'A source-first library of chat, streaming, tool-call, and approval components, installed into your project through the shadcn CLI so you can change anything.',
@@ -89,7 +110,61 @@ export const PROJECTS: Project[] = [
       'llms.txt and registry endpoints that coding agents can read.',
     ],
     stack: ['TypeScript', 'React', 'Next.js', 'shadcn'],
-    links: [{ label: 'agentui.pro', url: 'https://www.agentui.pro', kind: 'website' }, repo('agentui')],
+    links: [repo('agentui')],
+  },
+  {
+    slug: 'ventmark',
+    name: 'Ventmark',
+    summary: 'A free startup directory with an honest label on every number.',
+    role: 'Founder & engineer',
+    period: 'Oct 2026 – Present',
+    year: '2026',
+    status: 'Live',
+    featured: true,
+    mark: 'ventmark',
+    overview:
+      'Built in India and open to founders everywhere: founders list their startup for free and get discovered. Figures a founder types in are labelled self-reported, and verified revenue comes only from payment data they connect read-only.',
+    highlights: [
+      'Publishing proves control of the domain: an email code, a site tag, or a DNS record.',
+      'Optional prepaid plans to mark a startup for sale with an asking price.',
+      'Plain Markdown pages and llms.txt that search and AI answer engines can read.',
+    ],
+    stack: ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL', 'Supabase'],
+    links: [{ label: 'Website', url: 'https://useventmark.com', kind: 'website' }],
+    video: {
+      src: '/assets/projects/ventmark/launch.mp4',
+      poster: '/assets/projects/ventmark/launch-poster.jpg',
+      title: 'Ventmark launch film',
+      description:
+        'A 35-second launch film with an original score and no narration. On-screen text: Introducing Ventmark. You built something great. Now it needs to be found. List your startup. Free: add the basics, verify your domain, publish instantly. Get discovered. Every number says where it came from. Ready to sell? It ends on the Ventmark logo, “List your startup. Free.”, and useventmark.com. The startup and figures shown are illustrative.',
+      seconds: 35,
+      width: 1920,
+      height: 1080,
+      uploadDate: '2026-10-23',
+    },
+    socialImage: {
+      src: '/assets/projects/ventmark/social.png',
+      alt: 'Ventmark logo above “List your startup. Free.” and useventmark.com.',
+    },
+  },
+  {
+    slug: 'expressive-pocket-tts',
+    name: 'Expressive Pocket TTS',
+    summary: 'Fine-tuning a compact speech model for happy and sad delivery.',
+    role: 'Research & engineering',
+    period: 'Oct 2026',
+    year: '2026',
+    status: 'Research',
+    mark: 'voice',
+    overview:
+      'An independent experiment adapting Kyutai’s English Pocket TTS model with learned tone controls while preserving the original natural voice path.',
+    highlights: [
+      'Trained tone adapters and a sampling head on expressive speech.',
+      'Compared selected checkpoints with the original model and saved listening samples.',
+    ],
+    stack: ['Python', 'PyTorch', 'Pocket TTS', 'LoRA'],
+    links: [],
+    researchSlug: 'expressive-pocket-tts',
   },
   {
     slug: 'mandatepay',

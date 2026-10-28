@@ -1,0 +1,119 @@
+{
+  "title": "Expressive Pocket TTS: research note",
+  "research_date": "2026-10-05",
+  "status": "Independent research preview; not a peer-reviewed study.",
+  "base_model": {
+    "name": "Pocket TTS",
+    "version": "3.3.0",
+    "language": "English",
+    "flow_core_sha256": "9be1c955651cb9172ff2c5463d8d7e1da6fc8bd7789169923c0f0ce5779ff5ba"
+  },
+  "training": {
+    "gpu": "Tesla T4",
+    "joint_steps": 5000,
+    "joint_seed": 4117,
+    "selected_happy_step": 1500,
+    "sad_refinement_steps": 1000,
+    "trainable_parameters": 12921889,
+    "rank": 16,
+    "prefix_tokens": 8,
+    "layers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "happy_checkpoint_sha256": "6e3f9e5a4417bcd6f1c75ab67cb0922379c3952b3a76cace27a28ebe8bd9897a",
+    "sad_checkpoint_sha256": "db736150cebf445889403cec57a6c059d8cd0002c061514e2a8c1c1b381820a1",
+    "sad_refinement_seed": 5083
+  },
+  "data": {
+    "expresso_revision": "9fb79a189698de3255eff48edd2bc0d9e487adc0",
+    "expresso_catalog_utterances_all_splits_and_tones": 4536,
+    "expresso_catalog_hours_all_splits_and_tones": 3.7105832291666667,
+    "accepted_joint_split_utterances": {
+      "train": 2493,
+      "valid": 277,
+      "test": 255
+    },
+    "accepted_joint_split_minutes": {
+      "train": 126.37238472222222,
+      "valid": 14.296285416666667,
+      "test": 12.659778472222223
+    },
+    "strong_sad_ravdess_training_utterances": 80,
+    "strong_sad_ravdess_training_actors": 20,
+    "licenses": [
+      "Expresso CC-BY-NC-4.0",
+      "RAVDESS CC-BY-NC-SA-4.0"
+    ]
+  },
+  "held_out_reconstruction": {
+    "protocol": "20 canonical-ID-sorted test utterances per actor and emotion, seed 2718, frame-weighted diagonal velocity MSE",
+    "selection_frozen_before_test": true,
+    "metrics": {
+      "happy": {
+        "utterances": 80,
+        "frames": 2795,
+        "base": 0.6420358120435465,
+        "correct": 0.5334408599703384,
+        "swapped": 0.6315003134057006,
+        "checkpoint_sha256": "6e3f9e5a4417bcd6f1c75ab67cb0922379c3952b3a76cace27a28ebe8bd9897a",
+        "strength": 1.1
+      },
+      "sad": {
+        "utterances": 80,
+        "frames": 3281,
+        "base": 0.5692281353876962,
+        "correct": 0.4731223909493737,
+        "swapped": 0.5551238407343126,
+        "checkpoint_sha256": "db736150cebf445889403cec57a6c059d8cd0002c061514e2a8c1c1b381820a1",
+        "strength": 1.15
+      }
+    },
+    "limitation": "Teacher-forced reconstruction only; not emotion recognition or human naturalness."
+  },
+  "generated_speech_check": {
+    "clips": 48,
+    "normalized_asr_exact_matches": 39,
+    "remaining_asr_differences": "8 date/time renderings and 1 word substitution",
+    "interpretation": "ASR is a proxy and can make mistakes; this is not emotion recognition or a human perceptual score."
+  },
+  "listening": "One owner provided informal, unblinded feedback; no blinded multi-listener MOS study was performed.",
+  "examples": {
+    "spoken_text": "I am here. I am meeting you tomorrow, and I am looking forward to it.",
+    "samples": [
+      {
+        "tone": "natural",
+        "voice": "Anna",
+        "seed": 1729,
+        "duration_seconds": 4.64,
+        "checkpoint": "original base",
+        "sha256": "854b55bcc4178c400e15df16ca564bc5c1eb2871ffc422912480aab232845a01",
+        "file": "natural.wav"
+      },
+      {
+        "tone": "happy",
+        "voice": "Anna",
+        "seed": 1729,
+        "duration_seconds": 5.62,
+        "checkpoint": "joint-step-1500",
+        "sha256": "2cc06981db3fad7a85ebe081cb5cde71ab498da1ce5af6792879b14302448b7a",
+        "file": "happy.wav"
+      },
+      {
+        "tone": "sad",
+        "voice": "Anna",
+        "seed": 1729,
+        "duration_seconds": 9.87,
+        "checkpoint": "sad-step-1000-from-joint-1500",
+        "sha256": "a1b3af9e954174c483705eb30515ddbc0190b0d04b8f4d57bfc4fb9654d9b777",
+        "file": "sad.wav"
+      }
+    ],
+    "note": "Natural uses paragraph grouping. Happy and Sad use sentence-level pacing and a local content check; these are not a model-only ablation."
+  },
+  "recorded_training_rows": 6659
+}

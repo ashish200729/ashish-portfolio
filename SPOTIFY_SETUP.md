@@ -58,4 +58,4 @@ In production, add your deployed callback URL to the Spotify app as well:
 https://your-domain.example/callback
 ```
 
-Then deploy the project. If the Spotify variables are missing, the site still works and the Spotify card shows an empty state.
+Then deploy the project. If the Spotify variables are missing, the site still works and the Spotify card shows the selected fallback song.
