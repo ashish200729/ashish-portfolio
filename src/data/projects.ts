@@ -164,7 +164,7 @@ export const PROJECTS: Project[] = [
       'A REST API, MCP server, CLI, and signed webhooks behind scoped tokens.',
     ],
     stack: ['TypeScript', 'Next.js', 'PostgreSQL', 'Better Auth', 'Docker', 'MCP'],
-    links: [repo('openwarp')],
+    links: [{ label: 'Website', url: 'https://openwarp-landing.vercel.app', kind: 'website' }, repo('openwarp')],
     socialImage: {
       src: '/assets/projects/openwarp/social.png',
       alt: 'OpenWarp logo above “The people system you own.” over a field of blue digits.',
