@@ -28,6 +28,12 @@ const GLYPHS: Record<string, ReactNode> = {
       <path d="M55 28C55 43 43 55 28 55H12L23 44H28C37 44 44 37 44 28V23L55 12Z" />
     </g>
   ),
+  // OpenWarp's own mark (src/components/brand.tsx): three warp threads crossing one weft, scaled from its 24-unit grid.
+  openwarp: (
+    <g transform="scale(2)" strokeWidth="2.6" strokeLinecap="butt" strokeLinejoin="miter">
+      <path d="M5 2v7.2M5 14.8V22M12 2v20M19 2v7.2M19 14.8V22M2 12h7.2M14.8 12H22" />
+    </g>
+  ),
 };
 
 const ICONS: Record<string, LucideIcon> = {

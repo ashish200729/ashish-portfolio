@@ -148,6 +148,29 @@ export const PROJECTS: Project[] = [
     },
   },
   {
+    slug: 'openwarp',
+    name: 'OpenWarp',
+    summary: 'An open-source, self-hosted alternative to Warp for HR, time, and pay.',
+    role: 'Creator',
+    period: 'Nov 2026',
+    year: '2026',
+    status: 'Open source',
+    mark: 'openwarp',
+    overview:
+      'A people operations workspace that one company runs on its own server: directory, onboarding, time off, timesheets, pay runs, benefits, documents, and devices, with no per-employee fee. You set the pay rules and upload the bank files; it doesn’t file taxes or move money.',
+    highlights: [
+      'Self-hosted with Docker Compose; bank and identity data sealed with a key you hold.',
+      'Gross-to-net pay runs, payslips, and NACHA, SEPA, and journal files.',
+      'A REST API, MCP server, CLI, and signed webhooks behind scoped tokens.',
+    ],
+    stack: ['TypeScript', 'Next.js', 'PostgreSQL', 'Better Auth', 'Docker', 'MCP'],
+    links: [repo('openwarp')],
+    socialImage: {
+      src: '/assets/projects/openwarp/social.png',
+      alt: 'OpenWarp logo above “The people system you own.” over a field of blue digits.',
+    },
+  },
+  {
     slug: 'hitherto',
     name: 'Hitherto',
     summary: 'Temporal memory for coding agents that notices when code stops agreeing with it.',
